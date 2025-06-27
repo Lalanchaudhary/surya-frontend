@@ -13,15 +13,15 @@ const menuItems = [
   { label: 'Customized Cakes', href: '#' },
 ];
 
-const SubNavbar = ({ vertical = false }) => {
+const SubNavbar = () => {
   return (
-    <nav className={`w-full bg-red-600 border-b px-6 border-gray-100 shadow-sm ${vertical ? '' : 'hidden md:block'}`}>
-      <ul className={`flex ${vertical ? 'flex-col gap-2 items-start px-4 py-2' : 'flex-row justify-between items-center py-3 md:py-4 overflow-x-auto whitespace-nowrap'}`}>
+    <nav className="w-full bg-red-600 border-b px-2 sm:px-4 border-gray-100 shadow-sm sticky top-0 z-30">
+      <ul className="flex flex-row justify-between items-center py-2 sm:py-3 md:py-4 overflow-x-auto whitespace-nowrap gap-2 sm:gap-4 scrollbar-hide">
         {menuItems.map((item) => (
-          <li key={item.label} className="relative flex items-center">
+          <li key={item.label} className="relative flex items-center flex-shrink-0">
             <Link
               to={item.href}
-              className={`text-white font-medium transition-colors px-2 hover:text-rose-300 ${vertical ? 'py-1' : ''}`}
+              className="text-white font-medium transition-colors px-3 py-1 rounded-md hover:text-rose-300 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
               {item.label}
             </Link>

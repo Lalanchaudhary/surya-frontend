@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAdminLogin = async () => {
     try {
-      const res = await axios.get('http://localhost:9000/auth/verify', {
+      const res = await axios.get('https://surya-backend-wk2v.onrender.com/auth/verify', {
         withCredentials: true
       })
       setAdmin(res.data.admin)

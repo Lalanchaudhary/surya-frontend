@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-// Example slides data (replace with your own or pass as props)
 const slides = [
   {
     image: 'https://assets.winni.in/sf-img/live/visuals/home/desktop/2025/6/1750743296657.jpg',
@@ -15,33 +14,30 @@ const slides = [
   {
     image: 'https://assets.winni.in/sf-img/live/visuals/home/desktop/2025/3/1740983560968.jpg',
   },
-  // Add more slides as needed
 ];
 
-function NextArrow(props) {
-  const { onClick } = props;
+function NextArrow({ onClick }) {
   return (
     <button
-      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-md sm:p-1"
       onClick={onClick}
       aria-label="Next slide"
       style={{ outline: 'none', border: 'none' }}
     >
-      <FaChevronRight className="text-2xl text-gray-700" />
+      <FaChevronRight className="text-2xl text-gray-700 sm:text-xl" />
     </button>
   );
 }
 
-function PrevArrow(props) {
-  const { onClick } = props;
+function PrevArrow({ onClick }) {
   return (
     <button
-      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-md sm:p-1"
       onClick={onClick}
       aria-label="Previous slide"
       style={{ outline: 'none', border: 'none' }}
     >
-      <FaChevronLeft className="text-2xl text-gray-700" />
+      <FaChevronLeft className="text-2xl text-gray-700 sm:text-xl" />
     </button>
   );
 }
@@ -59,24 +55,24 @@ const HeroCarousel = ({ data = slides }) => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     appendDots: dots => (
-      <div style={{ position: 'absolute', bottom: 16, right: 32 }}>
+      <div style={{ position: 'absolute', bottom: 10, right: 10 }}>
         <ul className="flex gap-2">{dots}</ul>
       </div>
     ),
     customPaging: i => (
-      <button className="w-3 h-3 rounded-full bg-black/30 hover:bg-black/60 focus:outline-none" />
+      <button className="w-2 h-2 sm:w-2 sm:h-2 rounded-full bg-black/30 hover:bg-black/60 focus:outline-none" />
     ),
   };
 
   return (
-    <div className="relative w-full max-w-full overflow-hidden rounded-lg shadow">
+    <div className="relative w-full overflow-hidden rounded-md shadow">
       <Slider {...settings}>
         {data.map((slide, idx) => (
           <div key={idx} className="relative">
             <img
               src={slide.image}
               alt={`slide-${idx}`}
-              className="w-full h-[340px] md:h-[420px] lg:h-[440px] object-cover object-center"
+              className="w-full h-[200px] sm:h-[260px] md:h-[420px] lg:h-[440px] object-cover object-center"
             />
           </div>
         ))}
