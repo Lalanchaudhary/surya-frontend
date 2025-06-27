@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL ='https://surya-backend-wk2v.onrender.com';
+const API_URL ='https://backend-patient-night-4790.fly.dev';
 
 // Create axios instance with default config
 const api = axios.create({

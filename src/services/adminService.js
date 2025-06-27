@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { API_URL } from '../config';
 
 const api = axios.create({
-  baseURL: `https://surya-backend-wk2v.onrender.com/admin`,
+  baseURL: `https://backend-patient-night-4790.fly.dev/admin`,
   withCredentials: true, // Enable cookies
   headers: {
     'Content-Type': 'application/json'
