@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { API_URL } from '../config';
 
 const api = axios.create({
-  baseURL: `http://localhost:9000/admin`,
+  baseURL: `https://surya-backend-wk2v.onrender.com/admin`,
   withCredentials: true, // Enable cookies
   headers: {
     'Content-Type': 'application/json'

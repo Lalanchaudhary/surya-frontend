@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL ='http://localhost:9000';
+const API_URL ='https://surya-backend-wk2v.onrender.com';
 
 // Create axios instance with default config
 const api = axios.create({

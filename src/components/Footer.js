@@ -86,8 +86,8 @@ const Footer = () => (
       </div>
     </div>
     {/* Copyright */}
-    <div className="max-w-7xl mx-auto mt-8 border-t border-gray-800 pt-4 flex flex-col md:flex-row items-center justify-between text-gray-300 text-xs">
-      <div>
+    <div className="max-w-7xl mx-auto mt-8 border-t border-blackpt-4 flex flex-col md:flex-row items-center justify-between text-gray-300 text-xs">
+      <div className='text-black'>
         © 2024 by Surya Cake. Designed and Developed by <a href="#" className="underline font-semibold hover:text-pink-400">CREATORBABA</a>
       </div>
     </div>
