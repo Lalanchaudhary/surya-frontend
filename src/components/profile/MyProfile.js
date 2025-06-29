@@ -155,6 +155,7 @@ const MyProfile = () => {
                       startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}
                       onClick={handleSubmit}
                       disabled={loading}
+                      sx={{ backgroundColor: '#22c55e', '&:hover': { backgroundColor: '#16a34a' } }}
                     >
                       Save
                     </Button>
@@ -163,6 +164,7 @@ const MyProfile = () => {
                       startIcon={<CancelIcon />}
                       onClick={handleCancel}
                       disabled={loading}
+                      sx={{ borderColor: '#22c55e', color: '#22c55e', '&:hover': { borderColor: '#16a34a', backgroundColor: '#f0fdf4' } }}
                     >
                       Cancel
                     </Button>
@@ -172,7 +174,7 @@ const MyProfile = () => {
                 <Box>
                   <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                     <Typography variant="h6">{user?.name}</Typography>
-                    <IconButton onClick={handleEdit}>
+                    <IconButton onClick={handleEdit} sx={{ color: '#22c55e' }}>
                       <EditIcon />
                     </IconButton>
                   </Box>

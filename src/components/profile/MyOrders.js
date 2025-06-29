@@ -75,7 +75,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
               {['Pending', 'Processing', 'Shipped', 'Delivered'].map((step, index) => (
                 <div key={step} className="flex flex-col items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    getStatusStep(order.status) >= index ? 'bg-[#e098b0] text-white' : 'bg-gray-200'
+                    getStatusStep(order.status) >= index ? 'bg-green-500 text-white' : 'bg-gray-200'
                   }`}>
                     {index + 1}
                   </div>
@@ -238,7 +238,7 @@ const MyOrders = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#e098b0]"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
       </div>
     );
   }

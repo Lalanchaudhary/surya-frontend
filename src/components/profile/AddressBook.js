@@ -122,7 +122,7 @@ const AddressBook = () => {
       <div className="bg-white shadow rounded-lg p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Address Book</h2>
-          <button className="px-4 py-2 bg-[#e098b0] text-white rounded-md hover:bg-[#d88aa2] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e098b0]" onClick={() => handleOpen()}
+          <button className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onClick={() => handleOpen()}
           >
             Add New Address
           </button>
@@ -144,7 +144,7 @@ const AddressBook = () => {
                   <p className="text-gray-600">{user.name}</p>
                 </div>
                 <div className="flex space-x-2">
-                  <button className="text-gray-600 hover:text-[#e098b0]" onClick={() => handleOpen(address)}>
+                  <button className="text-gray-600 hover:text-green-500" onClick={() => handleOpen(address)}>
                     Edit
                   </button>
                   <button className="text-red-600 hover:text-red-700" onClick={() => handleDelete(address._id)}

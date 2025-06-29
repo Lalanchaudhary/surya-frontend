@@ -66,14 +66,14 @@ const MyWallet = () => {
       <h2 className="text-2xl font-bold text-gray-900 mb-6">My Wallet</h2>
       
       {/* Balance Card */}
-      <div className="bg-gradient-to-r from-[#e098b0] to-[#d88aa2] rounded-lg p-6 text-white mb-6">
+      <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white mb-6">
         <h3 className="text-lg font-medium mb-2">Available Balance</h3>
         <p className="text-3xl font-bold">₹{user?.wallet?.balance.toFixed(2) || 0}</p>
       </div>
 
       <button 
         onClick={handleOpen}
-        className='w-full text-center bg-gradient-to-r from-[#e098b0] to-[#d88aa2] rounded-lg p-2 text-white mb-4'
+        className='w-full text-center bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-2 text-white mb-4'
       >
         Add Money
       </button>
@@ -126,7 +126,7 @@ const MyWallet = () => {
               handleClose();
             }}
             variant="contained"
-            color="primary"
+            sx={{ backgroundColor: '#22c55e', '&:hover': { backgroundColor: '#16a34a' } }}
             disabled={!amount || loading}
           >
             {loading ? <CircularProgress size={24} /> : 'Add Money'}
