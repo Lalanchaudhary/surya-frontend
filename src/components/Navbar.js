@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FaUser, FaHeart, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 import { IoMdPin } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import suryalogo from '.././assets/suryalogo.png';
 
 const subMenuItems = [
@@ -20,7 +20,7 @@ const subMenuItems = [
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.classList.add('overflow-hidden');
@@ -74,7 +74,7 @@ export default function Navbar() {
 
       {/* Right: Icons (desktop only) */}
       <div className="hidden md:flex items-center space-x-6 text-sm text-gray-700">
-        <div className="flex items-center space-x-2 bg-gradient-to-r from-pink-100 to-blue-100 px-2 py-1 rounded-md">
+        <div className="flex items-center space-x-2 bg-gradient-to-r from-red-100 to-blue-100 px-2 py-1 rounded-md">
           <div className="flex items-center">
             <img src="https://flagcdn.com/w40/in.png" alt="India" className="h-4 w-6 mr-1" />
             <span>IND</span>
@@ -86,14 +86,10 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center space-x-4 text-xl relative">
-          <FaUser className="cursor-pointer" />
+          <FaUser className="cursor-pointer" onClick={() => navigate('/user-profile')} />
           <div className="relative">
-            <FaHeart className="cursor-pointer" />
-            <span className="absolute -top-2 -right-2 text-xs bg-pink-500 text-white rounded-full px-1">0</span>
-          </div>
-          <div className="relative">
-            <FaShoppingCart className="cursor-pointer" />
-            <span className="absolute -top-2 -right-2 text-xs bg-pink-500 text-white rounded-full px-1">1</span>
+            <FaShoppingCart className="cursor-pointer" onClick={() => navigate('/cart')} />
+            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">1</span>
           </div>
         </div>
       </div>
@@ -130,7 +126,7 @@ export default function Navbar() {
             </div>
 
             {/* Location */}
-            <div className="flex items-center space-x-2 bg-gradient-to-r from-pink-100 to-blue-100 px-2 py-1 rounded-md mb-3">
+            <div className="flex items-center space-x-2 bg-gradient-to-r from-red-100 to-blue-100 px-2 py-1 rounded-md mb-3">
               <div className="flex items-center">
                 <img src="https://flagcdn.com/w40/in.png" alt="India" className="h-4 w-6 mr-1" />
                 <span>IND</span>
@@ -144,14 +140,10 @@ export default function Navbar() {
 
             {/* Icons */}
             <div className="flex items-center space-x-6 text-xl mb-4">
-              <FaUser className="cursor-pointer" />
-              <div className="relative">
-                <FaHeart className="cursor-pointer" />
-                <span className="absolute -top-2 -right-2 text-xs bg-pink-500 text-white rounded-full px-1">0</span>
-              </div>
+              <FaUser className="cursor-pointer" onClick={() => navigate('/user-profile')} />
               <div className="relative">
                 <FaShoppingCart className="cursor-pointer" />
-                <span className="absolute -top-2 -right-2 text-xs bg-pink-500 text-white rounded-full px-1">1</span>
+                <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">1</span>
               </div>
             </div>
 
@@ -167,7 +159,7 @@ export default function Navbar() {
                     {item.label}
                   </Link>
                   {item.badge && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-pink-100 text-black">
+                    <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-black">
                       {item.badge}
                     </span>
                   )}

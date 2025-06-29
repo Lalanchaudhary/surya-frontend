@@ -507,7 +507,7 @@ const AllCakes = () => {
             <div key={cake.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-all overflow-hidden relative group">
               {/* Badge */}
               {cake.badge && (
-                <span className={`absolute top-3 left-3 px-3 py-1 rounded text-xs font-bold shadow ${cake.badge === 'Best Seller' ? 'bg-green-600 text-white' : 'bg-pink-500 text-white'}`}>
+                <span className={`absolute top-3 left-3 px-3 py-1 rounded text-xs font-bold shadow ${cake.badge === 'Best Seller' ? 'bg-green-600 text-white' : 'bg-red-500 text-white'}`}>
                   {cake.badge}
                 </span>
               )}

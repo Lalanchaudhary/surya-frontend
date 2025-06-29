@@ -2,13 +2,13 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAAr3zJl1OMAcOHBNcf5Tg4k2N0sRkEbFw",
-  authDomain: "groccery-app-c965f.firebaseapp.com",
-  projectId: "groccery-app-c965f",
-  storageBucket: "groccery-app-c965f.firebasestorage.app",
-  messagingSenderId: "372389950270",
-  appId: "1:372389950270:web:e0f9501eeb045bff74b26f",
-  measurementId: "G-MC7YVRFN3G"
+  apiKey: "AIzaSyBqgnUE0ao61WOQ23nRSebudjMuOSSG-Ok",
+  authDomain: "suryacake-e309f.firebaseapp.com",
+  projectId: "suryacake-e309f",
+  storageBucket: "suryacake-e309f.firebasestorage.app",
+  messagingSenderId: "167702429980",
+  appId: "1:167702429980:web:fbc7d376c38fc875b4bad9",
+  measurementId: "G-FWGYMXQVHL"
 };
 
 const app = initializeApp(firebaseConfig);

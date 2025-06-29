@@ -19,46 +19,46 @@ const Footer = () => (
           <img src={suryalogo} alt="Surya Cake Logo" className="h-14 mr-3" />
           <div>
             <h2 className="text-2xl font-bold tracking-wide text-red-600">Surya Cake</h2>
-            <span className="text-pink-400 font-semibold text-sm tracking-wider">BAKERY &amp; CATERING</span>
+            <span className="text-red-400 font-semibold text-sm tracking-wider">BAKERY &amp; CATERING</span>
           </div>
         </div>
         <p className="text-sm text-red-600 mb-4 max-w-xs">
           Surya Cake is a premier bakery shop with a rich legacy of over 10 years, delighting over 1 lakh satisfied customers. Our exquisite cakes, crafted with passion and quality ingredients, embody the perfect blend of taste and celebration, making every moment memorable.
         </p>
         <div className="flex space-x-4 mt-2">
-          <a href="#" className="text-red-600 hover:text-pink-400 text-2xl"><FaInstagram /></a>
-          <a href="#" className="text-red-600 hover:text-pink-400 text-2xl"><FaFacebookF /></a>
-          <a href="#" className="text-red-600 hover:text-pink-400 text-2xl"><FaYoutube /></a>
+          <a href="#" className="text-red-600 hover:text-red-400 text-2xl"><FaInstagram /></a>
+          <a href="#" className="text-red-600 hover:text-red-400 text-2xl"><FaFacebookF /></a>
+          <a href="#" className="text-red-600 hover:text-red-400 text-2xl"><FaYoutube /></a>
         </div>
       </div>
       {/* Quick Links */}
       <div className="col-span-1">
         <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
-        <div className="w-10 h-0.5 bg-pink-400 mb-4" />
+        <div className="w-10 h-0.5 bg-red-400 mb-4" />
         <ul className="space-y-2 text-red-600">
-          <li><a href="#" className="hover:text-pink-400">About Us</a></li>
-          <li><a href="#" className="hover:text-pink-400">Contact Us</a></li>
-          <li><a href="#" className="hover:text-pink-400">Blogs</a></li>
-          <li><a href="#" className="hover:text-pink-400">Order Online</a></li>
-          <li><a href="#" className="hover:text-pink-400">Visit Our Store</a></li>
+          <li><a href="#" className="hover:text-red-400">About Us</a></li>
+          <li><a href="#" className="hover:text-red-400">Contact Us</a></li>
+          <li><a href="#" className="hover:text-red-400">Blogs</a></li>
+          <li><a href="#" className="hover:text-red-400">Order Online</a></li>
+          <li><a href="#" className="hover:text-red-400">Visit Our Store</a></li>
         </ul>
       </div>
       {/* Policies */}
       <div className="col-span-1">
         <h3 className="text-lg font-semibold mb-2">Policies</h3>
-        <div className="w-10 h-0.5 bg-pink-400 mb-4" />
+        <div className="w-10 h-0.5 bg-red-400 mb-4" />
         <ul className="space-y-2 text-red-600">
-          <li><a href="#" className="hover:text-pink-400">Privacy Policy</a></li>
-          <li><a href="#" className="hover:text-pink-400">Terms &amp; Conditions</a></li>
-          <li><a href="#" className="hover:text-pink-400">Refund Policy</a></li>
-          <li><a href="#" className="hover:text-pink-400">Return &amp; Exchange</a></li>
-          <li><a href="#" className="hover:text-pink-400">Shipping Policy</a></li>
+          <li><a href="#" className="hover:text-red-400">Privacy Policy</a></li>
+          <li><a href="#" className="hover:text-red-400">Terms &amp; Conditions</a></li>
+          <li><a href="#" className="hover:text-red-400">Refund Policy</a></li>
+          <li><a href="#" className="hover:text-red-400">Return &amp; Exchange</a></li>
+          <li><a href="#" className="hover:text-red-400">Shipping Policy</a></li>
         </ul>
       </div>
       {/* Customer Support */}
       <div className="col-span-1">
         <h3 className="text-lg font-semibold mb-2">Customer Support</h3>
-        <div className="w-10 h-0.5 bg-pink-400 mb-4" />
+        <div className="w-10 h-0.5 bg-red-400 mb-4" />
         <div className="text-red-600 text-sm space-y-2">
           <div>
             <span className="block font-medium">Address 1:</span>
@@ -88,7 +88,7 @@ const Footer = () => (
     {/* Copyright */}
     <div className="max-w-7xl mx-auto mt-8 border-t border-blackpt-4 flex flex-col md:flex-row items-center justify-between text-gray-300 text-xs">
       <div className='text-black'>
-        © 2024 by Surya Cake. Designed and Developed by <a href="#" className="underline font-semibold hover:text-pink-400">CREATORBABA</a>
+        © 2024 by Surya Cake. Designed and Developed by <a href="#" className="underline font-semibold hover:text-red-400">CREATORBABA</a>
       </div>
     </div>
   </footer>

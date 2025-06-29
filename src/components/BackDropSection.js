@@ -5,7 +5,7 @@ const BackDropSection = () => {
   return (
     <div className="bg-[#fff5f2] py-10">
       {/* Decorative Banner */}
-      <div className="max-w-5xl mx-auto border-[6px] border-yellow-700 rounded-[60px] bg-pink-200 p-10 md:p-16 text-center shadow-md">
+      <div className="max-w-5xl mx-auto border-[6px] border-yellow-700 rounded-[60px] bg-red-200 p-10 md:p-16 text-center shadow-md">
         {/* Heading */}
         <h1 className="text-4xl md:text-5xl font-bold text-red-600 mb-6 font-serif tracking-wide">
           THE MAGICAL TICKET
