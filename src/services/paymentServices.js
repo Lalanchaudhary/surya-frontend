@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SiRazorpay } from "react-icons/si";
 import { CiWallet } from "react-icons/ci";
 import { BsCash } from "react-icons/bs";
-const API_URL = 'http://localhost:9000';
+const API_URL = 'https://backend-patient-night-4790.fly.dev';
 const api = axios.create({
     baseURL: API_URL,
     headers: {
