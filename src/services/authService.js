@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://backend-patient-night-4790.fly.dev',
+  baseURL: 'http://localhost:9000',
   withCredentials: true, // Enable cookies
   headers: {
     'Content-Type': 'application/json'

@@ -385,7 +385,7 @@ const UserProfile = () => {
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#e098b0] focus:border-[#e098b0] sm:text-sm"
                       />
                     ) : (
-                      <p className="mt-1 text-sm text-gray-900">{userData.addresses[0].pincode}, {userData.addresses[0].city}, {userData.addresses[0].state}</p>
+                      <p className="mt-1 text-sm text-gray-900"></p>
                     )}
                   </div>
                 </div>

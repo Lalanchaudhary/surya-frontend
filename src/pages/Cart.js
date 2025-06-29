@@ -72,18 +72,12 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" >
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-8">Shopping Cart</h1>
 
         {cartItems.length === 0 ? (
-          <div className="text-center py-8 sm:py-12">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-600 mb-4">Your cart is empty</h2>
-            <button
-              onClick={() => navigate('/all-cakes')}
-              className="bg-rose-300 hover:bg-rose-400 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition text-sm sm:text-base"
-            >
-              Continue Shopping
-            </button>
+          <div className="flex justify-center items-center py-8 sm:py-12">
+            <img src='https://assets.winni.in/groot/2023/09/06/empty-cart/desktop/main-image-without-button-new.png' className='h-80' onClick={() => navigate('/all-cakes')}/>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">

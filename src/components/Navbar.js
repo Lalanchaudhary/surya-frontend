@@ -4,6 +4,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { IoMdPin } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import suryalogo from '.././assets/suryalogo.png';
+import { useCart } from '../context/CartContext';
 
 const subMenuItems = [
   { label: 'CAKES', href: '/all-cakes' },
@@ -19,6 +20,7 @@ const subMenuItems = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const menuRef = useRef(null);
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function Navbar() {
     <nav className="flex justify-between items-center px-4 md:px-6 py-3 md:py-4 shadow-sm border-b bg-white relative">
       {/* Left: Logo + Toggle (mobile) */}
       <div className="flex items-center justify-between w-full md:w-auto">
-        <img src={suryalogo} alt="Surya Logo" className="h-10 md:h-16" />
+        <img src={suryalogo} alt="Surya Logo" className="h-10 md:h-16" onClick={() => navigate('/')}/>
         <button
           className="md:hidden ml-2 text-2xl text-gray-700 focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -89,7 +91,7 @@ export default function Navbar() {
           <FaUser className="cursor-pointer" onClick={() => navigate('/user-profile')} />
           <div className="relative">
             <FaShoppingCart className="cursor-pointer" onClick={() => navigate('/cart')} />
-            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">1</span>
+            <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full px-1">{cartItems.length}</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL ='https://backend-patient-night-4790.fly.dev';
+const API_URL ='http://localhost:9000';
 
 // Create axios instance with default config
 const api = axios.create({
