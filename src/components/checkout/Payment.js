@@ -32,7 +32,7 @@ import {
   getPaymentMethods
 } from '../../services/paymentServices';
 import { toast } from 'react-toastify';
-const Payment = ({ selectedAddress ,orderInstruction}) => {
+const Payment = ({ selectedAddress ,orderInstruction ,tax ,shipping}) => {
   const navigate = useNavigate();
   const { cartItems, removeFromCart } = useCart();
   const { user } = useUser();
@@ -41,9 +41,11 @@ const Payment = ({ selectedAddress ,orderInstruction}) => {
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  const shipping = 5.99;
-  const total = subtotal + shipping;
+  const total = subtotal+ shipping + tax ;
 
+  console.log('====================================');
+  console.log(subtotal ," + ",shipping , " + ",tax);
+  console.log('====================================');
   const renderPaymentMethodSelection = () => {
     const paymentMethods = getPaymentMethods();
 

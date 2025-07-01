@@ -4,7 +4,6 @@ import { useCart } from '../context/CartContext';
 import { useUser } from '../context/UserContext';
 import { getAllAdmins } from '../services/adminService';
 import { getDistanceFromLatLonInKm } from '../lib/utils';
-import cake from '../assets/cake.jpg';
 
 const Cart = () => {
   const navigate = useNavigate();

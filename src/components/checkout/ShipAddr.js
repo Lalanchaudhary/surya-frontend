@@ -29,7 +29,7 @@ import { useCart } from "../../context/CartContext";
 import { getAllAdmins } from '../../services/adminService';
 import { getDistanceFromLatLonInKm } from '../../lib/utils';
 
-const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoading, setShippingLoading, selectedAddress: selectedAddressProp, onOrderInstructionChange ,orderInstruction ,setOrderInstruction})=>{
+const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoading, setShippingLoading, selectedAddress: selectedAddressProp, onOrderInstructionChange ,orderInstruction ,setOrderInstruction ,setShipping})=>{
     const { cartItems } = useCart();
     const { user, addAddress, updateAddress, deleteAddress } = useUser();
     const [currentStep, setCurrentStep] = useState(1);
@@ -99,6 +99,7 @@ const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoa
                     }
                     if (minDistance !== Infinity) {
                         setShippingCost(minDistance * 10); // Rs 10 per km
+                        setShipping(minDistance * 10);
                     } else {
                         setShippingCost(0);
                     }
