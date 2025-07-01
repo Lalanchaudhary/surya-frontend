@@ -61,6 +61,7 @@ const Products = () => {
     price_adjustment: ''
   });
   const [newProductDetail, setNewProductDetail] = useState('');
+  const [editSizeIndex, setEditSizeIndex] = useState(null);
 
   useEffect(() => {
     loadProducts();
@@ -182,6 +183,29 @@ const Products = () => {
       ...prev,
       product_details: prev.product_details.filter((_, i) => i !== index)
     }));
+  };
+
+  const handleEditSize = (index) => {
+    setEditSizeIndex(index);
+    setNewSize({ ...formData.sizes[index] });
+  };
+
+  const handleUpdateSize = () => {
+    if (newSize.size && newSize.price && newSize.price_adjustment) {
+      setFormData(prev => ({
+        ...prev,
+        sizes: prev.sizes.map((s, i) =>
+          i === editSizeIndex ? { ...newSize, price: Number(newSize.price), price_adjustment: Number(newSize.price_adjustment) } : s
+        )
+      }));
+      setNewSize({ size: '', price: '', price_adjustment: '' });
+      setEditSizeIndex(null);
+    }
+  };
+
+  const handleCancelEditSize = () => {
+    setNewSize({ size: '', price: '', price_adjustment: '' });
+    setEditSizeIndex(null);
   };
 
   if (loading) {
@@ -408,13 +432,34 @@ const Products = () => {
                     />
                   </Grid>
                 </Grid>
-                <Button
-                  variant="outlined"
-                  onClick={handleAddSize}
-                  sx={{ mt: 1 }}
-                >
-                  Add Size
-                </Button>
+                {editSizeIndex === null ? (
+                  <Button
+                    variant="outlined"
+                    onClick={handleAddSize}
+                    sx={{ mt: 1 }}
+                  >
+                    Add Size
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleUpdateSize}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Update Size
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={handleCancelEditSize}
+                      sx={{ mt: 1 }}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                )}
                 <List>
                   {formData.sizes.map((size, index) => (
                     <ListItem key={index}>
@@ -422,6 +467,9 @@ const Products = () => {
                         primary={`${size.size} - ₹${size.price} (Adj: ₹${size.price_adjustment})`}
                       />
                       <ListItemSecondaryAction>
+                        <IconButton edge="end" onClick={() => handleEditSize(index)}>
+                          <EditIcon />
+                        </IconButton>
                         <IconButton edge="end" onClick={() => handleRemoveSize(index)}>
                           <DeleteIcon />
                         </IconButton>
