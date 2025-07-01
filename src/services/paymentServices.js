@@ -96,7 +96,7 @@ const handleRazorpayPayment = async (orderData) => {
   
       return new Promise((resolve, reject) => {
         const options = {
-          key: 'rzp_live_NY0ld00wkkG0bK',
+          key: 'rzp_test_1FGhUyAJx6vnYE',
           amount: order.amount,
           currency: order.currency,
           name: 'EggLessCake',

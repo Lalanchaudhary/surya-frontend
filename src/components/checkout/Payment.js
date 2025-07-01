@@ -42,8 +42,7 @@ const Payment = ({ selectedAddress ,orderInstruction}) => {
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   const shipping = 5.99;
-  const tax = subtotal * 0.1;
-  const total = subtotal + shipping + tax;
+  const total = subtotal + shipping;
 
   const renderPaymentMethodSelection = () => {
     const paymentMethods = getPaymentMethods();

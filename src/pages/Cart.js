@@ -18,9 +18,6 @@ const Cart = () => {
       try {
         if (user && user.addresses) {
           const { admins } = await getAllAdmins();
-          console.log('====================================');
-          console.log("hello");
-          console.log('====================================');
           const defaultAddress = user.addresses.find(addr => addr.isDefault) || user.addresses[0];
           const userLocation = defaultAddress.location;
 
