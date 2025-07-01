@@ -99,7 +99,7 @@ const handleRazorpayPayment = async (orderData) => {
           key: 'rzp_live_NY0ld00wkkG0bK',
           amount: order.amount,
           currency: order.currency,
-          name: 'EggLessCake',
+          name: 'SuryaCakes',
           description: 'Payment for your order',
           order_id: order.id,
   
