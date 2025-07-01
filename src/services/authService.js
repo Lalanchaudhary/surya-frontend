@@ -3,9 +3,6 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'https://backend-patient-night-4790.fly.dev',
   withCredentials: true, // Enable cookies
-  headers: {
-    'Content-Type': 'application/json'
-  }
 });
 
 export const login = async (credentials) => {
