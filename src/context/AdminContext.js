@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:9000/auth/logout', {}, {
+      await axios.post('https://backend-patient-night-4790.fly.dev/auth/logout', {}, {
         withCredentials: true
       })
     } catch (error) {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post('http://localhost:9000/auth/login', credentials, {
+      const response = await axios.post('https://backend-patient-night-4790.fly.dev/auth/login', credentials, {
         withCredentials: true
       })
       setAdmin(response.data.admin)
