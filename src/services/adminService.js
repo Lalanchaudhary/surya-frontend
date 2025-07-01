@@ -4,19 +4,8 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: `https://backend-patient-night-4790.fly.dev/admin`,
   withCredentials: true, // Enable cookies
-  headers: {
-    'Content-Type': 'application/json'
-  }
 });
 
-// Add token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 // Dashboard
 export const getDashboardStats = async () => {
