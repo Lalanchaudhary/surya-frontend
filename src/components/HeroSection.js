@@ -56,6 +56,27 @@ const HeroSection = () => {
       </div>
       <Carousel data={Heroimages} height="534" width="534" show={3} />
       <CakeGallery />
+      {/* Dummy Review Section */}
+      <section className="bg-white py-12 px-4 md:px-16">
+        <h2 className="text-3xl font-bold text-center text-rose-400 mb-8">What Our Customers Say</h2>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Review 1 */}
+          <div className="bg-rose-50 p-6 rounded-lg shadow text-center">
+            <p className="text-lg text-gray-700 mb-4">“Absolutely delicious cakes! The eggless options are a blessing. Will order again!”</p>
+            <div className="font-semibold text-rose-500">- Priya S.</div>
+          </div>
+          {/* Review 2 */}
+          <div className="bg-amber-50 p-6 rounded-lg shadow text-center">
+            <p className="text-lg text-gray-700 mb-4">“Beautifully crafted and so fresh. My birthday was made special. Thank you Surya Cake!”</p>
+            <div className="font-semibold text-amber-600">- Rahul M.</div>
+          </div>
+          {/* Review 3 */}
+          <div className="bg-rose-50 p-6 rounded-lg shadow text-center">
+            <p className="text-lg text-gray-700 mb-4">“Prompt delivery and amazing taste. Highly recommend for all occasions!”</p>
+            <div className="font-semibold text-rose-500">- Sneha K.</div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

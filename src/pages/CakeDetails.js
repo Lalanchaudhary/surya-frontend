@@ -90,117 +90,28 @@ const CakeDetails = () => {
     }
   };
 
-  // Sample cake data - replace with your actual data
-  // const cakeData = {
-  //   id: 1,
-  //   name: 'Classic Chocolate Cake',
-  //   price: 25,
-  //   image: cake,
-  //   description: 'A rich and moist chocolate cake made with premium cocoa and the finest ingredients. Perfect for any celebration.',
-  //   sizes: [
-  //     { id: 'small', name: 'Small', price: 20, serves: '4-6' },
-  //     { id: 'medium', name: 'Medium', price: 25, serves: '8-10' },
-  //     { id: 'large', name: 'Large', price: 35, serves: '12-15' }
-  //   ],
-  //   ingredients: [
-  //     'Premium Cocoa Powder',
-  //     'Organic Flour',
-  //     'Fresh Dairy',
-  //     'Natural Sweeteners',
-  //     'Pure Vanilla Extract'
-  //   ],
-  //   allergens: ['Dairy', 'Gluten'],
-  //   nutritionInfo: {
-  //     calories: '350 per slice',
-  //     protein: '5g',
-  //     carbs: '45g',
-  //     fat: '18g'
-  //   },
-  //   reviews: [
-  //     {
-  //       id: 1,
-  //       name: 'Sarah Johnson',
-  //       rating: 5,
-  //       comment: 'The best chocolate cake I\'ve ever had! Moist and delicious.',
-  //       date: '2024-02-15'
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'Mike Brown',
-  //       rating: 4,
-  //       comment: 'Great taste and perfect texture. Will order again!',
-  //       date: '2024-02-10'
-  //     }
-  //   ]
-  // };
-
-
-  // Sample related cakes data
-  const relatedCakes = [
-    {
-      id: 2,
-      name: 'Vanilla Dream Cake',
-      price: 23,
-      image: cake,
-      description: 'Light and fluffy vanilla cake with buttercream frosting'
-    },
-    {
-      id: 3,
-      name: 'Red Velvet Delight',
-      price: 28,
-      image: cake,
-      description: 'Classic red velvet with cream cheese frosting'
-    },
-    {
-      id: 4,
-      name: 'Carrot Cake Special',
-      price: 26,
-      image: cake,
-      description: 'Moist carrot cake with walnuts and cream cheese frosting'
-    },
-        {
-      id: 2,
-      name: 'Vanilla Dream Cake',
-      price: 23,
-      image: cake,
-      description: 'Light and fluffy vanilla cake with buttercream frosting'
-    },
-    {
-      id: 3,
-      name: 'Red Velvet Delight',
-      price: 28,
-      image: cake,
-      description: 'Classic red velvet with cream cheese frosting'
-    },
-    {
-      id: 4,
-      name: 'Carrot Cake Special',
-      price: 26,
-      image: cake,
-      description: 'Moist carrot cake with walnuts and cream cheese frosting'
-    },
-      {
-      id: 5,
-      name: 'Vanilla Dream Cake',
-      price: 23,
-      image: cake,
-      description: 'Light and fluffy vanilla cake with buttercream frosting'
-    },
-    {
-      id: 6,
-      name: 'Red Velvet Delight',
-      price: 28,
-      image: cake,
-      description: 'Classic red velvet with cream cheese frosting'
-    },
-    {
-      id: 7,
-      name: 'Carrot Cake Special',
-      price: 26,
-      image: cake,
-      description: 'Moist carrot cake with walnuts and cream cheese frosting'
-    }
+  // Dynamic related cakes suggestion
+  const allCakes = [
+    { id: 1, name: 'Classic Chocolate Cake', price: 25, image: cake, description: 'A rich and moist chocolate cake made with premium cocoa.', category: 'Chocolate', tag: 'Best Seller' },
+    { id: 2, name: 'Vanilla Dream Cake', price: 23, image: cake, description: 'Light and fluffy vanilla cake with buttercream frosting', category: 'Vanilla', tag: 'Trending' },
+    { id: 3, name: 'Red Velvet Delight', price: 28, image: cake, description: 'Classic red velvet with cream cheese frosting', category: 'Red Velvet', tag: 'Best Seller' },
+    { id: 4, name: 'Carrot Cake Special', price: 26, image: cake, description: 'Moist carrot cake with walnuts and cream cheese frosting', category: 'Carrot', tag: 'Trending' },
+    { id: 5, name: 'Butterscotch Bliss', price: 27, image: cake, description: 'Butterscotch cake with caramel drizzle', category: 'Butterscotch', tag: 'Combo' },
+    { id: 6, name: 'Pineapple Paradise', price: 24, image: cake, description: 'Fresh pineapple cake with whipped cream', category: 'Pineapple', tag: 'Combo' },
+    { id: 7, name: 'Black Forest Classic', price: 29, image: cake, description: 'Classic black forest with cherries', category: 'Chocolate', tag: 'Best Seller' },
+    { id: 8, name: 'Strawberry Swirl', price: 26, image: cake, description: 'Strawberry cake with real fruit', category: 'Strawberry', tag: 'Trending' },
+    { id: 9, name: 'Coffee Craze', price: 30, image: cake, description: 'Coffee-infused cake for caffeine lovers', category: 'Coffee', tag: 'Best Seller' },
+    { id: 10, name: 'Mango Magic', price: 28, image: cake, description: 'Seasonal mango cake', category: 'Mango', tag: 'Combo' },
   ];
+
+  // Filter related cakes by category or tag, excluding the current cake
+  const relatedCakes = cakeData
+    ? allCakes.filter(
+        c =>
+          c.id !== cakeData._id &&
+          (c.category === cakeData.category || c.tag === cakeData.tag)
+      ).slice(0, 8)
+    : allCakes.slice(0, 8);
 
   const handleQuantityChange = (value) => {
     if (value >= 1) {
@@ -394,10 +305,6 @@ const CakeDetails = () => {
                 <input type="radio" name="eggtype" value="Eggless" checked={eggType === 'Eggless'} onChange={() => setEggType('Eggless')} />
                 <span className="text-sm">Eggless</span>
               </label>
-              <label className="flex items-center gap-1 cursor-pointer">
-                <input type="radio" name="eggtype" value="With Egg" checked={eggType === 'With Egg'} onChange={() => setEggType('With Egg')} />
-                <span className="text-sm">With Egg</span>
-              </label>
             </div>
             {/* Pincode Check */}
             <div className="flex gap-2 items-center mb-2">
@@ -427,9 +334,8 @@ const CakeDetails = () => {
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded mb-2">
               <div className="font-semibold text-yellow-800 mb-1">Available offers</div>
               <ul className="list-disc list-inside text-sm text-yellow-900">
-                {offers.map((offer, idx) => (
-                  <li key={idx}>{offer}</li>
-                ))}
+                <li>Get upto ₹100 in wallet in first order</li>
+              <li>refers this site with your friend for get reward</li>
               </ul>
             </div>
             {/* Rating and Reviews */}

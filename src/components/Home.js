@@ -87,6 +87,37 @@ const Home = () => {
       <SubNavbar />
       <HeroCarousel/>
       <CakeGallery/>
+      {/* Dynamic Review Section */}
+      {(() => {
+        const reviews = [
+          { text: "Absolutely delicious cakes! The eggless options are a blessing. Will order again!", author: "Priya S.", color: "rose" },
+          { text: "Beautifully crafted and so fresh. My birthday was made special. Thank you Surya Cake!", author: "Rahul M.", color: "amber" },
+          { text: "Prompt delivery and amazing taste. Highly recommend for all occasions!", author: "Sneha K.", color: "rose" },
+          { text: "The best bakery in town! The cakes are always fresh and tasty.", author: "Amit J.", color: "amber" },
+          { text: "Loved the custom design cake. It was the highlight of our party!", author: "Ritu P.", color: "rose" },
+          { text: "Quick delivery and great service. The kids loved the cake!", author: "Karan S.", color: "amber" },
+          { text: "Affordable prices and premium quality. Highly recommended!", author: "Meena D.", color: "rose" },
+          { text: "The chocolate truffle cake was heavenly. Will order again soon!", author: "Suresh T.", color: "amber" },
+          { text: "Thank you for making my anniversary special with your amazing cake!", author: "Anjali V.", color: "rose" },
+          { text: "Best eggless cakes I've ever had. Soft, moist, and delicious!", author: "Deepak L.", color: "amber" },
+        ];
+        return (
+          <section className="bg-white py-12 px-4 md:px-16">
+            <h2 className="text-3xl font-bold text-center text-rose-400 mb-8">What Our Customers Say</h2>
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+              {reviews.map((review, idx) => (
+                <div
+                  key={idx}
+                  className={`bg-${review.color}-50 p-6 rounded-lg shadow text-center`}
+                >
+                  <p className="text-lg text-gray-700 mb-4">“{review.text}”</p>
+                  <div className={`font-semibold text-${review.color === 'rose' ? 'rose-500' : 'amber-600'}`}>- {review.author}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
     </div>
   );
 };

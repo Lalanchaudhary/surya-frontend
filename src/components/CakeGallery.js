@@ -36,7 +36,7 @@ const CakeGallery = () => {
   const trendingCakes = cakes.filter(cake => cake.label === 'Trending');
   const surpriseCakes = cakes.filter(cake => cake.tag === 'Combo');
   const bestSellers = cakes.filter(cake => cake.label === 'Best seller');
-
+  const PhotoCake = cakes.filter(cake => cake.tag === 'Photo-cakes');
   // Helper function to render star ratings
   const renderStars = (rating) => {
     const stars = [];
@@ -277,6 +277,11 @@ const CakeGallery = () => {
       <CakeSection 
         title="Our Best Sellers" 
         cakes={bestSellers} 
+        scrollRef={bestSellersScrollRef} 
+      />
+            <CakeSection 
+        title="Photo Cakes" 
+        cakes={PhotoCake} 
         scrollRef={bestSellersScrollRef} 
       />
     </div>

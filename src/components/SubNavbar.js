@@ -48,6 +48,18 @@ const menuItems = [
       { name: 'Birthday Specials', href: '/birthday-cakes' },
     ],
   },
+      {
+    label: 'Photo Cakes',
+    href: '/all-cakes',
+    dropdown: [
+      { name: 'Photo Cakes', href: '/all-cakes' },
+      { name: 'Name Cakes', href: '/all-cakes' },
+      { name: 'Designer Cakes', href: '/all-cakes' },
+      { name: '3D Cakes', href: '/all-cakes' },
+      { name: 'Fondant Cakes', href: '/all-cakes' },
+      { name: 'Custom Flavors', href: '/all-cakes' },
+    ],
+  },
   {
     label: 'Anniversary',
     href: '/anniversary',
