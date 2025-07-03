@@ -4,77 +4,63 @@ import { useNavigate } from 'react-router-dom';
 const menuItems = [
   {
     label: 'Cakes',
-    href: '/all-cakes',
     dropdown: [
-      { name: 'Chocolate Cakes', href: '/chocolate-cakes' },
-      { name: 'Vanilla Cakes', href: '/vanilla-cakes' },
-      { name: 'Red Velvet Cakes', href: '/all-cakes' },
-      { name: 'Fruit Cakes', href: '/all-cakes' },
-      { name: 'Cheesecakes', href: '/all-cakes' },
-      { name: 'Ice Cream Cakes', href: '/all-cakes' },
+      { name: 'Chocolate Cakes', href: 'chocolate-cake' },
+      { name: 'Vanilla Cakes', href: 'vanilla-cake' },
+      { name: 'Red Velvet Cakes', href: 'red-velvet-cake' },
+      { name: 'Fruit Cakes', href: 'fruit-cake' },
+      { name: 'Heart shape cake', href: 'heart-shape-cake' },
+      { name: 'pineapple-cake', href: 'pineapple-cake' },
+      { name: 'Butterscotch-cake', href: 'butterscotch-cake' },
+      { name: 'Black-forest-cake', href: 'black-forest-cake' },
     ],
   },
   {
     label: 'Theme Cakes',
-    href: '/all-cakes',
     dropdown: [
-      { name: 'Cartoon Theme', href: '/cartoon-cakes' },
-      { name: 'Superhero Theme', href: '/superhero-cakes' },
-      { name: 'Cricket Theme', href: '/cricket-cakes' },
-      { name: 'Nature Theme', href: '/nature-cakes' },
-    ],
-  },
-  {
-    label: 'By Relationship',
-    href: '/all-cakes',
-    dropdown: [
-      { name: 'For Parents', href: '/all-cakes' },
-      { name: 'For Siblings', href: '/all-cakes' },
-      { name: 'For Friends', href: '/all-cakes' },
-      { name: 'For Colleagues', href: '/all-cakes' },
-      { name: 'For Children', href: '/all-cakes' },
-      { name: 'For Grandparents', href: '/all-cakes' },
+      { name: 'Cartoon Theme', href: 'cartoon-cakes' },
+      { name: 'barbie Theme', href: 'barbie-cakes' },
+      { name: 'half Theme', href: 'half-cake' },
+      { name: 'multi-tier', href: 'multi-tier' },
+      { name: 'spiderman-cakes', href: 'spiderman-cakes' },
+      { name: 'unicorn-cake', href: 'unicorn-cake' },
     ],
   },
   {
     label: 'Birthday',
-    href: '/birthday-cakes',
     dropdown: [
-      { name: 'Kids Birthday', href: '/birthday-cakes' },
-      { name: 'Adult Birthday', href: '/birthday-cakes' },
-      { name: 'Milestone Birthday', href: '/birthday-cakes' },
-      { name: 'Surprise Birthday', href: '/birthday-cakes' },
-      { name: 'Birthday Combos', href: '/birthday-cakes' },
-      { name: 'Birthday Specials', href: '/birthday-cakes' },
+      { name: 'Kids Birthday', href: 'Birthday' },
+      { name: 'Adult Birthday', href: 'Birthday' },
+      { name: 'Milestone Birthday', href: 'Birthday' },
+      { name: 'Surprise Birthday', href: 'Birthday' },
+      { name: 'Birthday Combos', href: 'Birthday' },
+      { name: 'Birthday Specials', href: 'Birthday' },
     ],
   },
       {
     label: 'Photo Cakes',
-    href: '/all-cakes',
     dropdown: [
-      { name: 'Photo Cakes', href: '/all-cakes' },
-      { name: 'Name Cakes', href: '/all-cakes' },
-      { name: 'Designer Cakes', href: '/all-cakes' },
-      { name: '3D Cakes', href: '/all-cakes' },
-      { name: 'Fondant Cakes', href: '/all-cakes' },
-      { name: 'Custom Flavors', href: '/all-cakes' },
+      { name: 'Photo Cakes', href: 'Photo-cakes' },
+      { name: 'Name Cakes', href: 'Photo-cakes' },
+      { name: 'Designer Cakes', href: 'Photo-cakes' },
+      { name: '3D Cakes', href: 'Photo-cakes' },
+      { name: 'Fondant Cakes', href: 'Photo-cakes' },
+      { name: 'Custom Flavors', href: 'Photo-cakes' },
     ],
   },
   {
     label: 'Anniversary',
-    href: '/anniversary',
     dropdown: [
-      { name: '1st-anniversary-cakes', href: '/1st-anniversary-cakes' },
-      { name: 'Dating Anniversary', href: '/anniversary-cakes' },
-      { name: 'Work Anniversary', href: '/anniversary-cakes' },
-      { name: 'Friendship Anniversary', href: '/anniversary-cakes' },
-      { name: 'Anniversary Combos', href: '/anniversary-cakes' },
-      { name: 'Anniversary Specials', href: '/anniversary' },
+      { name: '1st-anniversary-cakes', href: 'Anniversary' },
+      { name: 'Dating Anniversary', href: 'Anniversary' },
+      { name: 'Work Anniversary', href: 'Anniversary' },
+      { name: 'Friendship Anniversary', href: 'Anniversary' },
+      { name: 'Anniversary Combos', href: 'Anniversary' },
+      { name: 'Anniversary Specials', href: 'Anniversary' },
     ],
   },
   {
     label: 'Occasion',
-    href: '/all-cakes',
     dropdown: [
       { name: 'FriendShip Day', href: '/friendshipday-cakes' },
       { name: 'Baby Shower', href: '/all-cakes' },
@@ -85,8 +71,18 @@ const menuItems = [
     ],
   },
   {
+    label: 'By Relationship',
+    dropdown: [
+      { name: 'For Parents', href: 'all-cakes' },
+      { name: 'For Siblings', href: 'all-cakes' },
+      { name: 'For Friends', href: '/all-cakes' },
+      { name: 'For Colleagues', href: '/all-cakes' },
+      { name: 'For Children', href: '/all-cakes' },
+      { name: 'For Grandparents', href: '/all-cakes' },
+    ],
+  },
+  {
     label: 'Customized Cakes',
-    href: '/all-cakes',
     dropdown: [
       { name: 'Photo Cakes', href: '/all-cakes' },
       { name: 'Name Cakes', href: '/all-cakes' },
@@ -168,7 +164,7 @@ const SubNavbar = ({ vertical = false }) => {
                 className="relative flex flex-col items-start group"
               >
                 <button
-                  onClick={() => handleItemClick(item.href)}
+                
                   className={`text-md md:text-lg font-normel text-white hover:text-rose-500 transition-colors px-2 ${
                     vertical ? 'py-1' : ''
                   }`}
@@ -199,7 +195,7 @@ const SubNavbar = ({ vertical = false }) => {
                     {item.dropdown.map((dropdownItem, index) => (
                       <li key={index}>
                         <button
-                          onClick={() => handleDropdownItemClick(dropdownItem.href)}
+                          onClick={() =>{navigate(`/cakes/${dropdownItem.href}`)}}
                           className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
                         >
                           {dropdownItem.name}

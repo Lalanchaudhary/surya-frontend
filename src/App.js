@@ -34,6 +34,7 @@ import { reverseGeocode } from './lib/reverseGeocode';
 import { useUser } from './context/UserContext'
 import Home from './components/Home'
 import Addons from './components/admin/Addons'
+import CommanPage from './pages/CommanPage'
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token')
@@ -144,6 +145,7 @@ const App = () => {
             <Route path="/delievery" element={<DeliveryBoys />} />
             <Route path="/all-cakes" element={<AllCakes />} />
             <Route path="/cake/:id" element={<CakeDetails />} />
+            <Route path="/cakes/:id" element={<CommanPage />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

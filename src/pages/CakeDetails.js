@@ -605,38 +605,124 @@ const CakeDetails = () => {
 
         {/* Add Ons Modal */}
         {showAddOnsModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold">Add Ons</h3>
-                <button onClick={() => setShowAddOnsModal(false)} className="text-gray-500 hover:text-gray-700">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl mx-auto max-h-[90vh] overflow-hidden">
+              {/* Header */}
+              <div className="flex justify-between items-center p-6 border-b border-gray-200">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Add Ons</h3>
+                  <p className="text-gray-600 mt-1">Enhance your cake with these delicious additions</p>
+                </div>
+                <button 
+                  onClick={() => setShowAddOnsModal(false)} 
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-              <div className="mb-4">
-                <p className="text-gray-700 mb-2">Would you like to add any of these to your order?</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {addons.length === 0 ? (
-                    <div className="text-gray-500 col-span-2">No add-ons available.</div>
-                  ) : (
-                    addons.map((addOn, idx) => (
-                      <div key={addOn._id || idx} className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition ${selectedAddOns.some(a => a.name === addOn.name) ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-400'}`} onClick={() => toggleAddOn(addOn)}>
-                        <img src={addOn.image} alt={addOn.name} className="w-16 h-16 object-cover rounded" />
-                        <div className="flex-1">
-                          <div className="font-semibold text-gray-800">{addOn.name}</div>
-                          <div className="text-green-700 font-semibold">₹{addOn.price}</div>
+
+              {/* Content */}
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                {addons.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                    </div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">No Add-ons Available</h4>
+                    <p className="text-gray-500">Check back later for exciting add-ons!</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    {addons.map((addOn, idx) => (
+                      <div 
+                        key={addOn._id || idx} 
+                        className={`relative group cursor-pointer transition-all duration-200 rounded-lg border-2 p-4 hover:shadow-lg ${
+                          selectedAddOns.some(a => a.name === addOn.name) 
+                            ? 'border-green-500 bg-green-50 shadow-md' 
+                            : 'border-gray-200 hover:border-green-300 bg-white'
+                        }`}
+                        onClick={() => toggleAddOn(addOn)}
+                      >
+                        {/* Selection Indicator */}
+                        <div className={`absolute top-3 right-3 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                          selectedAddOns.some(a => a.name === addOn.name)
+                            ? 'border-green-500 bg-green-500'
+                            : 'border-gray-300 bg-white'
+                        }`}>
+                          {selectedAddOns.some(a => a.name === addOn.name) && (
+                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
                         </div>
-                        <input type="checkbox" checked={selectedAddOns.some(a => a.name === addOn.name)} readOnly className="w-5 h-5 accent-green-500" />
+
+                        {/* Image */}
+                        <div className="aspect-square mb-3 overflow-hidden rounded-lg">
+                          <img 
+                            src={addOn.image} 
+                            alt={addOn.name} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                          />
+                        </div>
+
+                        {/* Content */}
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-gray-900 text-sm leading-tight line-clamp-2">
+                            {addOn.name}
+                          </h4>
+                          <div className="flex items-center justify-between">
+                            <span className="text-lg font-bold text-green-600">
+                              ₹{addOn.price}
+                            </span>
+                            {addOn.tag && (
+                              <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                                {addOn.tag}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    ))
-                  )}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="flex justify-end gap-3">
-                <button onClick={() => { setShowAddOnsModal(false); setSelectedAddOns([]); }} className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">Skip</button>
-                <button onClick={handleConfirmAddToCart} className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition flex items-center gap-2">Add to Cart</button>
+
+              {/* Footer */}
+              <div className="p-4 sm:p-6 border-t border-gray-200 bg-gray-50">
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                  <div className="text-sm text-gray-600 text-center sm:text-left">
+                    {selectedAddOns.length > 0 && (
+                      <span>
+                        {selectedAddOns.length} add-on{selectedAddOns.length !== 1 ? 's' : ''} selected • 
+                        Total: ₹{selectedAddOns.reduce((sum, addon) => sum + addon.price, 0)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex gap-3 w-full sm:w-auto">
+                    <button 
+                      onClick={() => { 
+                        setShowAddOnsModal(false); 
+                        setSelectedAddOns([]); 
+                      }} 
+                      className="flex-1 sm:flex-none px-4 sm:px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm sm:text-base"
+                    >
+                      Skip
+                    </button>
+                    <button 
+                      onClick={handleConfirmAddToCart} 
+                      className="flex-1 sm:flex-none px-4 sm:px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
+                    >
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                      </svg>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
