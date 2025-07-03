@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { API_URL } from '../config';
 
 const api = axios.create({
-  baseURL: `https://backend-patient-night-4790.fly.dev/admin`,
+  baseURL: `https://backend-patient-night-4790.fly.dev`,
   withCredentials: true, // Enable cookies
 });
 
@@ -10,7 +10,7 @@ const api = axios.create({
 // Dashboard
 export const getDashboardStats = async () => {
   try {
-    const response = await api.get('/dashboard');
+    const response = await api.get('/admin/dashboard');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch dashboard statistics' };
@@ -20,7 +20,7 @@ export const getDashboardStats = async () => {
 // Orders
 export const getAllOrders = async () => {
   try {
-    const response = await api.get('/orders');
+    const response = await api.get('/admin/orders');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch orders' };
@@ -29,7 +29,7 @@ export const getAllOrders = async () => {
 
 export const updateOrderStatus = async (orderId, status) => {
   try {
-    const response = await api.put(`/orders/${orderId}/status`, { status });
+    const response = await api.put(`/admin/orders/${orderId}/status`, { status });
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to update order status' };
@@ -39,7 +39,7 @@ export const updateOrderStatus = async (orderId, status) => {
 // Products
 export const getAllProducts = async () => {
   try {
-    const response = await api.get('/products');
+    const response = await api.get('/admin/products');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch products' };
@@ -48,7 +48,7 @@ export const getAllProducts = async () => {
 
 export const createProduct = async (productData) => {
   try {
-    const response = await api.post('/products', productData);
+    const response = await api.post('/admin/products', productData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to create product' };
@@ -57,7 +57,7 @@ export const createProduct = async (productData) => {
 
 export const updateProduct = async (productId, productData) => {
   try {
-    const response = await api.put(`/products/${productId}`, productData);
+    const response = await api.put(`/admin/products/${productId}`, productData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to update product' };
@@ -66,7 +66,7 @@ export const updateProduct = async (productId, productData) => {
 
 export const deleteProduct = async (productId) => {
   try {
-    const response = await api.delete(`/products/${productId}`);
+    const response = await api.delete(`/admin/products/${productId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to delete product' };
@@ -76,7 +76,7 @@ export const deleteProduct = async (productId) => {
 // Users
 export const getAllUsers = async () => {
   try {
-    const response = await api.get('/users');
+    const response = await api.get('/admin/users');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch users' };
@@ -85,7 +85,7 @@ export const getAllUsers = async () => {
 
 export const updateUserStatus = async (userId, status) => {
   try {
-    const response = await api.put(`/users/${userId}/status`, { status });
+    const response = await api.put(`/admin/users/${userId}/status`, { status });
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to update user status' };
@@ -95,7 +95,7 @@ export const updateUserStatus = async (userId, status) => {
 // Analytics
 export const getSalesAnalytics = async (period = 'monthly') => {
   try {
-    const response = await api.get(`/analytics/sales?period=${period}`);
+    const response = await api.get(`/admin/analytics/sales?period=${period}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch sales analytics' };
@@ -104,7 +104,7 @@ export const getSalesAnalytics = async (period = 'monthly') => {
 
 export const getProductAnalytics = async () => {
   try {
-    const response = await api.get('/analytics/products');
+    const response = await api.get('/admin/analytics/products');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch product analytics' };
@@ -114,7 +114,7 @@ export const getProductAnalytics = async () => {
 // Delivery Boys
 export const getAllDeliveryBoys = async () => {
   try {
-    const response = await api.get('/delivery');
+    const response = await api.get('/admin/delivery');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch delivery boys' };
@@ -123,7 +123,7 @@ export const getAllDeliveryBoys = async () => {
 
 export const createDeliveryBoy = async (deliveryBoyData) => {
   try {
-    const response = await api.post('/delivery', deliveryBoyData);
+    const response = await api.post('/admin/delivery', deliveryBoyData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to create delivery boy' };
@@ -132,7 +132,7 @@ export const createDeliveryBoy = async (deliveryBoyData) => {
 
 export const updateDeliveryBoy = async (deliveryBoyId, deliveryBoyData) => {
   try {
-    const response = await api.put(`/delivery/${deliveryBoyId}`, deliveryBoyData);
+    const response = await api.put(`/admin/delivery/${deliveryBoyId}`, deliveryBoyData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to update delivery boy' };
@@ -141,7 +141,7 @@ export const updateDeliveryBoy = async (deliveryBoyId, deliveryBoyData) => {
 
 export const deleteDeliveryBoy = async (deliveryBoyId) => {
   try {
-    const response = await api.delete(`/delivery/${deliveryBoyId}`);
+    const response = await api.delete(`/admin/delivery/${deliveryBoyId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to delete delivery boy' };
@@ -150,7 +150,7 @@ export const deleteDeliveryBoy = async (deliveryBoyId) => {
 
 export const getAdminDetails = async () => {
   try {
-    const response = await api.get('/details');
+    const response = await api.get('/admin/details');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch admin details' };
@@ -159,7 +159,7 @@ export const getAdminDetails = async () => {
 
 export const getAllAdmins = async () => {
   try {
-    const response = await api.get('/admins');
+    const response = await api.get('/admin/admins');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch admins' };
@@ -168,7 +168,7 @@ export const getAllAdmins = async () => {
 
 export const assignOrderToAdmin = async (orderId, adminId) => {
   try {
-    const response = await api.put(`/orders/${orderId}/assign-admin`, { adminId });
+    const response = await api.put(`/admin/orders/${orderId}/assign-admin`, { adminId });
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to assign order to admin' };
@@ -178,7 +178,7 @@ export const assignOrderToAdmin = async (orderId, adminId) => {
 // Addons
 export const getAllAddons = async () => {
   try {
-    const response = await api.get('/addons');
+    const response = await api.get('/adons/addons');
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to fetch addons' };
@@ -187,7 +187,7 @@ export const getAllAddons = async () => {
 
 export const createAddon = async (addonData) => {
   try {
-    const response = await api.post('/addons', addonData);
+    const response = await api.post('/adons/addons', addonData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to create addon' };
@@ -196,7 +196,7 @@ export const createAddon = async (addonData) => {
 
 export const updateAddon = async (addonId, addonData) => {
   try {
-    const response = await api.put(`/addons/${addonId}`, addonData);
+    const response = await api.put(`/adons/addons/${addonId}`, addonData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to update addon' };
@@ -205,7 +205,7 @@ export const updateAddon = async (addonId, addonData) => {
 
 export const deleteAddon = async (addonId) => {
   try {
-    const response = await api.delete(`/addons/${addonId}`);
+    const response = await api.delete(`/adons/addons/${addonId}`);
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to delete addon' };

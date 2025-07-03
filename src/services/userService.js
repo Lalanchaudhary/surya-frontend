@@ -207,3 +207,13 @@ export const syncLocationAddress = async (addressData) => {
     throw new Error(error.response?.data?.error || 'Failed to sync address');
   }
 }; 
+
+// Addons
+export const getAllAddons = async () => {
+  try {
+    const response = await api.get('/admins/addons');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to fetch addons' };
+  }
+};
