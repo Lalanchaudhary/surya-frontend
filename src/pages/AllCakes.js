@@ -504,9 +504,16 @@ const AllCakes = () => {
         {/* Cake Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cakes.map((cake) => (
-            <div key={cake.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-all overflow-hidden relative group">
+            <div
+              key={cake.id}
+              className="bg-white rounded-lg shadow hover:shadow-lg transition-all overflow-hidden relative group cursor-pointer"
+              onClick={() => navigate(`/cake/${cake._id}`)}
+              tabIndex={0}
+              role="button"
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate(`/cake/${cake._id}`); }}
+            >
               {/* Badge */}
-              {cake.badge && (
+              {cake.badge && cake.badge != 'N/A'(
                 <span className={`absolute top-3 left-3 px-3 py-1 rounded text-xs font-bold shadow ${cake.badge === 'Best Seller' ? 'bg-green-600 text-white' : 'bg-red-500 text-white'}`}>
                   {cake.badge}
                 </span>

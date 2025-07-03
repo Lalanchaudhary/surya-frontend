@@ -141,7 +141,7 @@ const CakeGallery = () => {
             title={cake.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          {cake.label && (
+          {cake.label &&  (
             <span className="absolute top-2 left-2 bg-red-700 text-white text-xs font-bold px-2 py-0.5 rounded shadow">
               {cake.label}
             </span>

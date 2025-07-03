@@ -4,7 +4,7 @@ import cake from '../assets/cake.jpg';
 import { useCart } from '../context/CartContext';
 import { getCakeById, addReview, getAllCakes } from '../services/cakeServices';
 import { toast } from 'react-toastify';
-
+import { getAllAddons} from '../services/adminService';
 const CakeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -41,13 +41,6 @@ const CakeDetails = () => {
     { icon: '🎂', title: 'Serving Excellence', desc: '100% Satisfaction!' },
     { icon: '⏰', title: 'Timely Delivery', desc: 'Slots Available' },
   ];
-  const upgrades = [
-    { name: 'Black Forest Diamond Cake', price: 749, image: cake },
-    { name: 'Milky Mousse Blackforest Cake', price: 849, image: cake },
-    { name: 'Together Forever Black Forest Cake', price: 999, image: cake },
-    { name: 'Black Forest Cake With Yellow Roses', price: 1249, image: cake },
-    { name: 'Classic Red Velvet Cake Box', price: 1299, image: cake },
-  ];
   // --- End Placeholder Data ---
 
   // New state for egg/eggless and pincode
@@ -58,7 +51,7 @@ const CakeDetails = () => {
   // Add state for Add Ons modal and selected add-ons
   const [showAddOnsModal, setShowAddOnsModal] = useState(false);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
-
+  const [addons, setAddons] = useState([]);
   // Fetch cake data if not available from location state
   useEffect(() => {
     const fetchCakeData = async () => {
@@ -79,6 +72,23 @@ const CakeDetails = () => {
 
     fetchCakeData();
   }, [id, location.state]);
+
+    // Fetch all addons
+    const fetchAddons = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const data = await getAllAddons();
+        setAddons(data);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch addons');
+      }
+      setLoading(false);
+    };
+  
+    useEffect(() => {
+      fetchAddons();
+    }, []);
 
   // Fetch all cakes for suggestions
   useEffect(() => {
@@ -608,16 +618,20 @@ const CakeDetails = () => {
               <div className="mb-4">
                 <p className="text-gray-700 mb-2">Would you like to add any of these to your order?</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {upgrades.map((addOn, idx) => (
-                    <div key={idx} className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition ${selectedAddOns.some(a => a.name === addOn.name) ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-400'}`} onClick={() => toggleAddOn(addOn)}>
-                      <img src={addOn.image} alt={addOn.name} className="w-16 h-16 object-cover rounded" />
-                      <div className="flex-1">
-                        <div className="font-semibold text-gray-800">{addOn.name}</div>
-                        <div className="text-green-700 font-semibold">₹{addOn.price}</div>
+                  {addons.length === 0 ? (
+                    <div className="text-gray-500 col-span-2">No add-ons available.</div>
+                  ) : (
+                    addons.map((addOn, idx) => (
+                      <div key={addOn._id || idx} className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition ${selectedAddOns.some(a => a.name === addOn.name) ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-400'}`} onClick={() => toggleAddOn(addOn)}>
+                        <img src={addOn.image} alt={addOn.name} className="w-16 h-16 object-cover rounded" />
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-800">{addOn.name}</div>
+                          <div className="text-green-700 font-semibold">₹{addOn.price}</div>
+                        </div>
+                        <input type="checkbox" checked={selectedAddOns.some(a => a.name === addOn.name)} readOnly className="w-5 h-5 accent-green-500" />
                       </div>
-                      <input type="checkbox" checked={selectedAddOns.some(a => a.name === addOn.name)} readOnly className="w-5 h-5 accent-green-500" />
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
               <div className="flex justify-end gap-3">
