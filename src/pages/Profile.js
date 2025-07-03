@@ -95,6 +95,9 @@ const Profile = () => {
       if (data.isExistingUser) {
         setIsExistingUser(true);
         navigate('/user-profile');
+        setTimeout(() => {
+          window.location.reload(); // Then refresh
+        }, 100); // Small delay to allow navigation to complete
       } else {
         setIsOtpVerified(true);
       }
@@ -124,7 +127,10 @@ const Profile = () => {
         email: formData.email,
         phoneNumber: formData.phoneNumber,
       });
-              navigate('/user-profile');
+      navigate('/user-profile');
+      setTimeout(() => {
+        window.location.reload(); // Then refresh
+      }, 100); // Small delay to allow navigation to complete
 
       // User will be automatically redirected after successful registration
       // as the register service handles token and user storage
