@@ -90,16 +90,16 @@ const Home = () => {
       {/* Dynamic Review Section */}
       {(() => {
         const reviews = [
-          { text: "Absolutely delicious cakes! The eggless options are a blessing. Will order again!", author: "Priya S.", color: "rose" },
-          { text: "Beautifully crafted and so fresh. My birthday was made special. Thank you Surya Cake!", author: "Rahul M.", color: "amber" },
-          { text: "Prompt delivery and amazing taste. Highly recommend for all occasions!", author: "Sneha K.", color: "rose" },
-          { text: "The best bakery in town! The cakes are always fresh and tasty.", author: "Amit J.", color: "amber" },
-          { text: "Loved the custom design cake. It was the highlight of our party!", author: "Ritu P.", color: "rose" },
-          { text: "Quick delivery and great service. The kids loved the cake!", author: "Karan S.", color: "amber" },
-          { text: "Affordable prices and premium quality. Highly recommended!", author: "Meena D.", color: "rose" },
-          { text: "The chocolate truffle cake was heavenly. Will order again soon!", author: "Suresh T.", color: "amber" },
-          { text: "Thank you for making my anniversary special with your amazing cake!", author: "Anjali V.", color: "rose" },
-          { text: "Best eggless cakes I've ever had. Soft, moist, and delicious!", author: "Deepak L.", color: "amber" },
+          { text: "Absolutely delicious cakes! The eggless options are a blessing. Will order again!", author: "Priya S.", color: "rose", img: "https://randomuser.me/api/portraits/women/68.jpg" },
+          { text: "Beautifully crafted and so fresh. My birthday was made special. Thank you Surya Cake!", author: "Rahul M.", color: "amber", img: "https://randomuser.me/api/portraits/men/32.jpg" },
+          { text: "Prompt delivery and amazing taste. Highly recommend for all occasions!", author: "Sneha K.", color: "rose", img: "https://randomuser.me/api/portraits/women/65.jpg" },
+          { text: "The best bakery in town! The cakes are always fresh and tasty.", author: "Amit J.", color: "amber", img: "https://randomuser.me/api/portraits/men/45.jpg" },
+          { text: "Loved the custom design cake. It was the highlight of our party!", author: "Ritu P.", color: "rose", img: "https://randomuser.me/api/portraits/women/72.jpg" },
+          { text: "Quick delivery and great service. The kids loved the cake!", author: "Karan S.", color: "amber", img: "https://randomuser.me/api/portraits/men/23.jpg" },
+          { text: "Affordable prices and premium quality. Highly recommended!", author: "Meena D.", color: "rose", img: "https://randomuser.me/api/portraits/women/12.jpg" },
+          { text: "The chocolate truffle cake was heavenly. Will order again soon!", author: "Suresh T.", color: "amber", img: "https://randomuser.me/api/portraits/men/56.jpg" },
+          { text: "Thank you for making my anniversary special with your amazing cake!", author: "Anjali V.", color: "rose", img: "https://randomuser.me/api/portraits/women/34.jpg" },
+          { text: "Best eggless cakes I've ever had. Soft, moist, and delicious!", author: "Deepak L.", color: "amber", img: "https://randomuser.me/api/portraits/men/78.jpg" },
         ];
         return (
           <section className="bg-white py-12 px-4 md:px-16">
@@ -108,8 +108,14 @@ const Home = () => {
               {reviews.map((review, idx) => (
                 <div
                   key={idx}
-                  className={`bg-${review.color}-50 p-6 rounded-lg shadow text-center`}
+                  className={`bg-${review.color}-50 p-6 rounded-lg shadow text-center flex flex-col items-center`}
                 >
+                  <img src={review.img} alt={review.author} className={`w-16 h-16 rounded-full mb-4 object-cover border-2 border-${review.color}-200`} />
+                  <div className="flex justify-center mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" /></svg>
+                    ))}
+                  </div>
                   <p className="text-lg text-gray-700 mb-4">“{review.text}”</p>
                   <div className={`font-semibold text-${review.color === 'rose' ? 'rose-500' : 'amber-600'}`}>- {review.author}</div>
                 </div>

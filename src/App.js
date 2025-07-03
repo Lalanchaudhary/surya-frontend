@@ -33,6 +33,7 @@ import { getCurrentLocation } from './lib/getCurrentLocation';
 import { reverseGeocode } from './lib/reverseGeocode';
 import { useUser } from './context/UserContext'
 import Home from './components/Home'
+import Addons from './components/admin/Addons'
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token')
@@ -222,6 +223,16 @@ const App = () => {
                 <AdminRoute>
                   <AdminLayout>
                     <AdminProducts />
+                  </AdminLayout>
+                </AdminRoute>
+              }
+            />
+                        <Route
+              path="/admin/addons"
+              element={
+                <AdminRoute>
+                  <AdminLayout>
+                    <Addons />
                   </AdminLayout>
                 </AdminRoute>
               }

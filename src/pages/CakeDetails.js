@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import cake from '../assets/cake.jpg';
 import { useCart } from '../context/CartContext';
-import { getCakeById, addReview } from '../services/cakeServices';
+import { getCakeById, addReview, getAllCakes } from '../services/cakeServices';
 import { toast } from 'react-toastify';
 
 const CakeDetails = () => {
@@ -25,6 +25,10 @@ const CakeDetails = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [submittingReview, setSubmittingReview] = useState(false);
+
+  // New state for all cakes and loading status
+  const [allCakes, setAllCakes] = useState([]);
+  const [relatedCakesLoading, setRelatedCakesLoading] = useState(false);
 
   // --- Placeholder Data for Offers, Badges, and Upgrades ---
   const offers = [
@@ -51,6 +55,10 @@ const CakeDetails = () => {
   const [pincode, setPincode] = useState('');
   const [pincodeStatus, setPincodeStatus] = useState(null);
 
+  // Add state for Add Ons modal and selected add-ons
+  const [showAddOnsModal, setShowAddOnsModal] = useState(false);
+  const [selectedAddOns, setSelectedAddOns] = useState([]);
+
   // Fetch cake data if not available from location state
   useEffect(() => {
     const fetchCakeData = async () => {
@@ -72,6 +80,23 @@ const CakeDetails = () => {
     fetchCakeData();
   }, [id, location.state]);
 
+  // Fetch all cakes for suggestions
+  useEffect(() => {
+    const fetchAllCakes = async () => {
+      try {
+        setRelatedCakesLoading(true);
+        const allCakesData = await getAllCakes();
+        setAllCakes(allCakesData);
+      } catch (err) {
+        console.error('Error fetching all cakes:', err);
+        // Do not set a user-facing error for this, as it's a background task
+      } finally {
+        setRelatedCakesLoading(false);
+      }
+    };
+    fetchAllCakes();
+  }, []);
+
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -90,28 +115,14 @@ const CakeDetails = () => {
     }
   };
 
-  // Dynamic related cakes suggestion
-  const allCakes = [
-    { id: 1, name: 'Classic Chocolate Cake', price: 25, image: cake, description: 'A rich and moist chocolate cake made with premium cocoa.', category: 'Chocolate', tag: 'Best Seller' },
-    { id: 2, name: 'Vanilla Dream Cake', price: 23, image: cake, description: 'Light and fluffy vanilla cake with buttercream frosting', category: 'Vanilla', tag: 'Trending' },
-    { id: 3, name: 'Red Velvet Delight', price: 28, image: cake, description: 'Classic red velvet with cream cheese frosting', category: 'Red Velvet', tag: 'Best Seller' },
-    { id: 4, name: 'Carrot Cake Special', price: 26, image: cake, description: 'Moist carrot cake with walnuts and cream cheese frosting', category: 'Carrot', tag: 'Trending' },
-    { id: 5, name: 'Butterscotch Bliss', price: 27, image: cake, description: 'Butterscotch cake with caramel drizzle', category: 'Butterscotch', tag: 'Combo' },
-    { id: 6, name: 'Pineapple Paradise', price: 24, image: cake, description: 'Fresh pineapple cake with whipped cream', category: 'Pineapple', tag: 'Combo' },
-    { id: 7, name: 'Black Forest Classic', price: 29, image: cake, description: 'Classic black forest with cherries', category: 'Chocolate', tag: 'Best Seller' },
-    { id: 8, name: 'Strawberry Swirl', price: 26, image: cake, description: 'Strawberry cake with real fruit', category: 'Strawberry', tag: 'Trending' },
-    { id: 9, name: 'Coffee Craze', price: 30, image: cake, description: 'Coffee-infused cake for caffeine lovers', category: 'Coffee', tag: 'Best Seller' },
-    { id: 10, name: 'Mango Magic', price: 28, image: cake, description: 'Seasonal mango cake', category: 'Mango', tag: 'Combo' },
-  ];
-
   // Filter related cakes by category or tag, excluding the current cake
   const relatedCakes = cakeData
     ? allCakes.filter(
         c =>
-          c.id !== cakeData._id &&
-          (c.category === cakeData.category || c.tag === cakeData.tag)
+          c._id !== cakeData._id &&
+          (c.category === cakeData.category || c.tags?.some(tag => cakeData.tags?.includes(tag)))
       ).slice(0, 8)
-    : allCakes.slice(0, 8);
+    : [];
 
   const handleQuantityChange = (value) => {
     if (value >= 1) {
@@ -120,14 +131,19 @@ const CakeDetails = () => {
   };
 
   const handleAddToCart = () => {
+    // Show Add Ons modal instead of adding to cart immediately
+    setShowAddOnsModal(true);
+  };
+
+  // Confirm add to cart with add-ons
+  const handleConfirmAddToCart = () => {
     if (!cakeData) return;
-    
     const selectedSizeData = cakeData.sizes.find(size => size.size === selectedSize);
     if (!selectedSizeData) {
       toast.error('Please select a size');
       return;
     }
-
+    // Add main cake
     const cartItem = {
       id: cakeData._id,
       name: cakeData.name,
@@ -137,14 +153,36 @@ const CakeDetails = () => {
       quantity: quantity,
       totalPrice: selectedSizeData.price * quantity
     };
-    
     addToCart(cartItem);
+    // Add selected add-ons
+    selectedAddOns.forEach(addOn => {
+      addToCart({
+        id: `addon-${addOn.name}`,
+        name: addOn.name,
+        image: addOn.image,
+        price: addOn.price,
+        selectedSize: null,
+        quantity: 1,
+        totalPrice: addOn.price
+      });
+    });
+    setShowAddOnsModal(false);
+    setSelectedAddOns([]);
     const token = localStorage.getItem("token");
     if(token){
       toast.success('Added to cart successfully!');
     } else {
       toast.error('Please login to add items to cart');
     }
+  };
+
+  // Toggle add-on selection
+  const toggleAddOn = (addOn) => {
+    setSelectedAddOns(prev =>
+      prev.some(a => a.name === addOn.name)
+        ? prev.filter(a => a.name !== addOn.name)
+        : [...prev, addOn]
+    );
   };
 
   // Update size selection handler
@@ -306,20 +344,6 @@ const CakeDetails = () => {
                 <span className="text-sm">Eggless</span>
               </label>
             </div>
-            {/* Pincode Check */}
-            <div className="flex gap-2 items-center mb-2">
-              <input
-                type="text"
-                value={pincode}
-                onChange={e => setPincode(e.target.value.replace(/\D/g, '').slice(0,6))}
-                placeholder="Enter pincode to check delivery"
-                className="border px-3 py-2 rounded text-sm w-48"
-              />
-              <button onClick={handlePincodeCheck} className="bg-green-600 text-white px-4 py-2 rounded text-sm font-semibold">Check</button>
-              {pincodeStatus && (
-                <span className={`text-sm ml-2 ${pincodeStatus === 'Available' ? 'text-green-600' : 'text-red-500'}`}>{pincodeStatus}</span>
-              )}
-            </div>
             {/* Quantity and Add to Cart */}
             <div className="flex gap-4 items-center mb-2">
               <div className="flex items-center border rounded-lg">
@@ -351,19 +375,6 @@ const CakeDetails = () => {
           </div>
         </div>
 
-        {/* Pick an Upgrade Section */}
-        <div className="mt-8">
-          <div className="font-semibold text-lg mb-2 text-gray-800">Pick an upgrade</div>
-          <div className="flex gap-4 overflow-x-auto pb-2">
-            {upgrades.map((upg, idx) => (
-              <div key={idx} className="min-w-[160px] bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                <img src={upg.image} alt={upg.name} className="w-24 h-24 object-cover rounded mb-2" />
-                <div className="text-sm font-medium text-gray-800 text-center mb-1">{upg.name}</div>
-                <div className="text-green-700 font-semibold">₹{upg.price}</div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Product Description Section */}
         <div className="mt-8 bg-white rounded-lg shadow p-6">
@@ -389,8 +400,32 @@ const CakeDetails = () => {
               Write a Review
             </button>
           </div>
-          {/* Show a placeholder since reviews is a number, not an array */}
-          <div className="text-gray-500 text-sm">No individual reviews to display. ({cakeData.reviews || 0} total reviews)</div>
+          {cakeData.reviews && cakeData.reviews.length > 0 ? (
+            <div className="space-y-4">
+              {cakeData.reviews.map((review, index) => (
+                <div key={index} className="bg-gray-50 p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <div className="font-semibold text-gray-800">{review.name}</div>
+                    <div className="flex ml-4">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-600">{review.comment}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-gray-500 text-sm">No reviews yet. Be the first to write one!</div>
+          )}
         </div>
 
         {/* Related Cakes Section */}
@@ -427,26 +462,35 @@ const CakeDetails = () => {
               WebkitOverflowScrolling: 'touch'
             }}
           >
-            {relatedCakes.map((cake) => (
-              <div
-                key={cake.id}
-                className="flex-none w-[280px] md:w-[320px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer snap-start"
-                onClick={() => navigate(`/cake/${cake.id}`)}
-              >
-                <div className="aspect-square">
-                  <img
-                    src={cake.image}
-                    alt={cake.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">{cake.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2 line-clamp-2">{cake.description}</p>
-                  <p className="text-rose-500 font-semibold">${cake.price}</p>
-                </div>
+            {relatedCakesLoading ? (
+              <div className="w-full text-center py-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-500 mx-auto"></div>
+                <p className="mt-2 text-gray-600">Loading suggestions...</p>
               </div>
-            ))}
+            ) : relatedCakes.length > 0 ? (
+              relatedCakes.map((cake) => (
+                <div
+                  key={cake._id}
+                  className="flex-none w-[280px] md:w-[320px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer snap-start"
+                  onClick={() => navigate(`/cake/${cake._id}`)}
+                >
+                  <div className="aspect-square">
+                    <img
+                      src={cake.image}
+                      alt={cake.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">{cake.name}</h3>
+                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{cake.description}</p>
+                    <p className="text-rose-500 font-semibold">₹{cake.price}</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="w-full text-center text-gray-500 py-4">No related cakes found.</div>
+            )}
           </div>
         </div>
 
@@ -545,6 +589,41 @@ const CakeDetails = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Add Ons Modal */}
+        {showAddOnsModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold">Add Ons</h3>
+                <button onClick={() => setShowAddOnsModal(false)} className="text-gray-500 hover:text-gray-700">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="mb-4">
+                <p className="text-gray-700 mb-2">Would you like to add any of these to your order?</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {upgrades.map((addOn, idx) => (
+                    <div key={idx} className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition ${selectedAddOns.some(a => a.name === addOn.name) ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-400'}`} onClick={() => toggleAddOn(addOn)}>
+                      <img src={addOn.image} alt={addOn.name} className="w-16 h-16 object-cover rounded" />
+                      <div className="flex-1">
+                        <div className="font-semibold text-gray-800">{addOn.name}</div>
+                        <div className="text-green-700 font-semibold">₹{addOn.price}</div>
+                      </div>
+                      <input type="checkbox" checked={selectedAddOns.some(a => a.name === addOn.name)} readOnly className="w-5 h-5 accent-green-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-end gap-3">
+                <button onClick={() => { setShowAddOnsModal(false); setSelectedAddOns([]); }} className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">Skip</button>
+                <button onClick={handleConfirmAddToCart} className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition flex items-center gap-2">Add to Cart</button>
+              </div>
             </div>
           </div>
         )}

@@ -173,4 +173,41 @@ export const assignOrderToAdmin = async (orderId, adminId) => {
   } catch (error) {
     throw error.response?.data || { message: 'Failed to assign order to admin' };
   }
+};
+
+// Addons
+export const getAllAddons = async () => {
+  try {
+    const response = await api.get('/addons');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to fetch addons' };
+  }
+};
+
+export const createAddon = async (addonData) => {
+  try {
+    const response = await api.post('/addons', addonData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to create addon' };
+  }
+};
+
+export const updateAddon = async (addonId, addonData) => {
+  try {
+    const response = await api.put(`/addons/${addonId}`, addonData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to update addon' };
+  }
+};
+
+export const deleteAddon = async (addonId) => {
+  try {
+    const response = await api.delete(`/addons/${addonId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to delete addon' };
+  }
 }; 
