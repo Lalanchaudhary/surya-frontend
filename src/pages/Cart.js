@@ -4,7 +4,7 @@ import { useCart } from '../context/CartContext';
 import { useUser } from '../context/UserContext';
 import { getAllAdmins } from '../services/adminService';
 import { getDistanceFromLatLonInKm } from '../lib/utils';
-
+import suryacart from '../assets/suryacart.jpg'
 const Cart = () => {
   const navigate = useNavigate();
   const { cartItems, updateQuantity, removeFromCart } = useCart();
@@ -73,7 +73,7 @@ const Cart = () => {
 
         {cartItems.length === 0 ? (
           <div className="flex justify-center items-center py-8 sm:py-12">
-            <img src='https://assets.winni.in/groot/2023/09/06/empty-cart/desktop/main-image-without-button-new.png' className='h-80' onClick={() => navigate('/all-cakes')}/>
+            <img src={suryacart} className='h-80' onClick={() => navigate('/all-cakes')}/>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
