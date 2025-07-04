@@ -97,11 +97,13 @@ const menuItems = [
 const SubNavbar = ({ vertical = false }) => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
   const itemRefs = useRef({});
   const navigate = useNavigate();
 
   const handleMouseEnter = (label) => {
-    if (!vertical && itemRefs.current[label]) {
+    if (!vertical && window.innerWidth >= 768 && itemRefs.current[label]) {
       const rect = itemRefs.current[label].getBoundingClientRect();
       const dropdownWidth = 260;
       const margin = 12;
@@ -136,18 +138,57 @@ const SubNavbar = ({ vertical = false }) => {
     setHoveredItem(null);
   };
 
+  const handleMobileDropdownToggle = (label) => {
+    setMobileDropdownOpen((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
+
+  const handleMobileNavigate = (href) => {
+    navigate(href);
+    setMobileMenuOpen(false);
+    setMobileDropdownOpen({});
+  };
+
   return (
     <nav
-      className={`w-full bg-red-600 border-b border-gray-100 shadow-sm ${
-        vertical ? '' : 'hidden md:block'
-      } relative`}
+      className={`w-full bg-red-600 border-b border-gray-100 shadow-sm relative`}
     >
+      <div className="md:hidden flex items-center justify-between px-4 py-3">
+        <span className="text-white text-lg font-bold">Menu</span>
+        <button
+          className="text-white focus:outline-none"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label="Toggle menu"
+        >
+          <svg
+            className="h-7 w-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {mobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
       <ul
-        className={`flex ${
-          vertical
-            ? 'flex-col gap-2 items-start px-4 py-2'
-            : 'flex-row justify-between items-center px-8 py-3 md:py-4 overflow-x-auto whitespace-nowrap'
-        }`}
+        className={`hidden md:flex flex-row justify-between items-center px-8 py-3 md:py-4 overflow-x-auto whitespace-nowrap`}
       >
         {menuItems.map((item) => {
           const isActive = hoveredItem === item.label;
@@ -164,10 +205,7 @@ const SubNavbar = ({ vertical = false }) => {
                 className="relative flex flex-col items-start group"
               >
                 <button
-                
-                  className={`text-md md:text-lg font-normel text-white hover:text-rose-500 transition-colors px-2 ${
-                    vertical ? 'py-1' : ''
-                  }`}
+                  className={`text-md md:text-lg font-normel text-white hover:text-rose-500 transition-colors px-2`}
                 >
                   {item.label}
                   {item.badge && (
@@ -178,7 +216,6 @@ const SubNavbar = ({ vertical = false }) => {
                 </button>
               </li>
 
-              {/* Dropdown shown inside same wrapper */}
               {isActive && (
                 <div
                   className="fixed bg-white border border-gray-200 rounded-lg shadow-2xl z-50 min-w-[240px] py-2"
@@ -217,6 +254,51 @@ const SubNavbar = ({ vertical = false }) => {
           );
         })}
       </ul>
+      {mobileMenuOpen && (
+        <ul className="md:hidden flex flex-col gap-2 items-start px-4 py-2 bg-white border-t border-gray-200 z-50 w-full absolute left-0 top-full shadow-lg animate-fade-in">
+          {menuItems.map((item) => (
+            <li key={item.label} className="w-full">
+              <button
+                className="flex justify-between items-center w-full py-2 text-left text-base font-medium text-gray-800 hover:text-rose-600 focus:outline-none"
+                onClick={() => handleMobileDropdownToggle(item.label)}
+              >
+                <span>{item.label}</span>
+                <svg
+                  className={`h-5 w-5 ml-2 transition-transform ${mobileDropdownOpen[item.label] ? 'rotate-90' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              {mobileDropdownOpen[item.label] && (
+                <ul className="pl-4 pb-2">
+                  {item.dropdown.map((dropdownItem, idx) => (
+                    <li key={idx}>
+                      <button
+                        onClick={() => handleMobileNavigate(`/cakes/${dropdownItem.href}`)}
+                        className="block w-full text-left px-2 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                      >
+                        {dropdownItem.name}
+                      </button>
+                    </li>
+                  ))}
+                  <li className="pt-2">
+                    <button
+                      onClick={() => handleMobileNavigate(item.href || '/cakes')}
+                      className="text-sm text-rose-500 hover:text-rose-600 font-medium"
+                    >
+                      View All {item.label} →
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 };
