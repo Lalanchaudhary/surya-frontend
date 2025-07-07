@@ -12,19 +12,65 @@ const menuItems = [
       { name: 'Heart shape cake', href: 'heart-shape-cake' },
       { name: 'pineapple-cake', href: 'pineapple-cake' },
       { name: 'Butterscotch-cake', href: 'butterscotch-cake' },
-      { name: 'Black-forest-cake', href: 'black-forest-cake' },
-    ],
+      { name: 'Black-forest-cake', href: 'black-forest-cake'},],
   },
   {
     label: 'Theme Cakes',
-    dropdown: [
-      { name: 'Cartoon Theme', href: 'cartoon-cakes' },
-      { name: 'barbie Theme', href: 'barbie-cakes' },
-      { name: 'half Theme', href: 'half-cake' },
-      { name: 'multi-tier', href: 'multi-tier' },
-      { name: 'spiderman-cakes', href: 'spiderman-cakes' },
-      { name: 'unicorn-cake', href: 'unicorn-cake' },
-    ],
+    dropdownGroups: [
+      {
+        title: 'Kids Cakes',
+        items: [
+          { name: '1st Birthday Cakes', href: '1st-birthday-cakes' },
+          { name: 'Princess Cakes', href: 'princess-cakes' },
+          { name: 'Animal Cakes', href: 'animal-cakes' },
+          { name: 'Masha & The Bear Cakes', href: 'masha-bear-cakes' },
+          { name: 'Cakes For Boys', href: 'cakes-for-boys' },
+          { name: 'Cakes For Girls', href: 'cakes-for-girls' },
+          { name: 'Number Cakes', href: 'number-cakes' },
+          { name: 'Alphabet Cakes', href: 'alphabet-cakes' },
+          { name: 'Car And Vehicle Cakes', href: 'car-vehicle-cakes' },
+          { name: 'Baby Shark Cakes', href: 'baby-shark-cakes' },
+          { name: 'All Kids Cakes', href: 'all-kids-cakes' },
+        ]
+      },
+      {
+        title: 'Character Cakes',
+        items: [
+          { name: 'Spiderman Cakes', href: 'spiderman-cakes' },
+          { name: 'Unicorn Cakes', href: 'unicorn-cakes' },
+          { name: 'Barbie Cakes', href: 'barbie-cakes' },
+          { name: 'Avenger Cakes', href: 'avenger-cakes' },
+          { name: 'Peppa Pig Cakes', href: 'peppa-pig-cakes' },
+          { name: 'Doraemon Cakes', href: 'doraemon-cakes' },
+          { name: 'Naruto Cakes', href: 'naruto-cakes' },
+          { name: 'Cocomelon Cakes', href: 'cocomelon-cakes' },
+          { name: 'Cartoon Cakes', href: 'cartoon-cakes' },
+          { name: 'Super Hero Cakes', href: 'super-hero-cakes' },
+        ]
+      },
+      {
+        title: 'Grown Up Cakes',
+        items: [
+          { name: 'Bride To Be Cakes', href: 'bride-to-be-cakes' },
+          { name: 'Wedding Cakes', href: 'wedding-cakes' },
+          { name: 'Gym Cakes', href: 'gym-cakes' },
+          { name: 'Party Cakes', href: 'party-cakes' },
+        ]
+      },
+      {
+        title: 'More Cakes',
+        items: [
+          { name: 'Jungle Theme Cakes', href: 'jungle-theme-cakes' },
+          { name: 'Cricket Cakes', href: 'cricket-cakes' },
+          { name: 'Football Cakes', href: 'football-cakes' },
+          { name: 'Basketball Cakes', href: 'basketball-cakes' },
+          { name: 'Rainbow Cakes', href: 'rainbow-cakes' },
+          { name: 'Butterfly Cakes', href: 'butterfly-cakes' },
+          { name: 'Dinosaur Cakes', href: 'dinosaur-cakes' },
+          { name: 'All Designer Cakes', href: 'all-designer-cakes' },
+        ]
+      }
+    ]
   },
   {
     label: 'Birthday',
@@ -105,14 +151,21 @@ const SubNavbar = ({ vertical = false }) => {
   const handleMouseEnter = (label) => {
     if (!vertical && window.innerWidth >= 768 && itemRefs.current[label]) {
       const rect = itemRefs.current[label].getBoundingClientRect();
-      const dropdownWidth = 260;
+      const dropdownWidth = 720; // or your dropdown's width in px
       const margin = 12;
-  
-      let calculatedLeft = rect.left + rect.width / 2;
-      if (calculatedLeft - dropdownWidth / 2 < margin) {
-        calculatedLeft = dropdownWidth / 2 + margin;
+
+      // Default: left edge of dropdown aligns with left edge of label
+      let calculatedLeft = rect.left;
+
+      // If dropdown would overflow right, shift it left just enough to fit
+      if (calculatedLeft + dropdownWidth > window.innerWidth - margin) {
+        calculatedLeft = window.innerWidth - dropdownWidth - margin;
       }
-  
+      // Prevent overflow on the left
+      if (calculatedLeft < margin) {
+        calculatedLeft = margin;
+      }
+
       setDropdownPos({
         top: rect.bottom + 4,
         left: calculatedLeft,
@@ -222,24 +275,47 @@ const SubNavbar = ({ vertical = false }) => {
                   style={{
                     top: dropdownPos.top,
                     left: dropdownPos.left,
-                    transform: 'translateX(-50%)',
                   }}
                 >
                   <div className="px-4 py-2 border-b border-gray-100">
                     <h3 className="font-semibold text-gray-800 text-sm">{item.label}</h3>
                   </div>
-                  <ul className="py-1">
-                    {item.dropdown.map((dropdownItem, index) => (
-                      <li key={index}>
-                        <button
-                          onClick={() =>{navigate(`/cakes/${dropdownItem.href}`)}}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
-                        >
-                          {dropdownItem.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                  {item.dropdownGroups ? (
+                    <div className="flex flex-row gap-8 px-4 py-2">
+                      {item.dropdownGroups.map((group, groupIdx) => (
+                        <div key={groupIdx} className="min-w-[180px]">
+                          <h4 className="font-bold text-gray-800 text-md mb-2 flex items-center">
+                            <span className="text-yellow-400 mr-2">✱</span> {group.title}
+                          </h4>
+                          <ul>
+                            {group.items.map((dropdownItem, idx) => (
+                              <li key={idx}>
+                                <button
+                                  onClick={() => navigate(`/cakes/${dropdownItem.href}`)}
+                                  className="block w-full text-left px-2 py-1 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                                >
+                                  {dropdownItem.name}
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <ul className="py-1">
+                      {item.dropdown && item.dropdown.map((dropdownItem, index) => (
+                        <li key={index}>
+                          <button
+                            onClick={() =>{navigate(`/cakes/${dropdownItem.href}`)}}
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   <div className="px-4 py-2 border-t border-gray-100">
                     <button
                       onClick={() => handleItemClick(item.href)}
@@ -275,16 +351,35 @@ const SubNavbar = ({ vertical = false }) => {
               </button>
               {mobileDropdownOpen[item.label] && (
                 <ul className="pl-4 pb-2">
-                  {item.dropdown.map((dropdownItem, idx) => (
-                    <li key={idx}>
-                      <button
-                        onClick={() => handleMobileNavigate(`/cakes/${dropdownItem.href}`)}
-                        className="block w-full text-left px-2 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
-                      >
-                        {dropdownItem.name}
-                      </button>
-                    </li>
-                  ))}
+                  {item.dropdownGroups
+                    ? item.dropdownGroups.map((group, groupIdx) => (
+                        <div key={groupIdx}>
+                          <div className="font-bold text-gray-800 text-md mb-1 flex items-center">
+                            <span className="text-yellow-400 mr-2">✱</span> {group.title}
+                          </div>
+                          {group.items.map((dropdownItem, idx) => (
+                            <li key={idx}>
+                              <button
+                                onClick={() => handleMobileNavigate(`/cakes/${dropdownItem.href}`)}
+                                className="block w-full text-left px-2 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                              >
+                                {dropdownItem.name}
+                              </button>
+                            </li>
+                          ))}
+                        </div>
+                      ))
+                    : item.dropdown &&
+                      item.dropdown.map((dropdownItem, idx) => (
+                        <li key={idx}>
+                          <button
+                            onClick={() => handleMobileNavigate(`/cakes/${dropdownItem.href}`)}
+                            className="block w-full text-left px-2 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                          >
+                            {dropdownItem.name}
+                          </button>
+                        </li>
+                      ))}
                   <li className="pt-2">
                     <button
                       onClick={() => handleMobileNavigate(item.href || '/cakes')}

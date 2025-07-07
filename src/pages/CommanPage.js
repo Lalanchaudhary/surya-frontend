@@ -23,6 +23,7 @@ const CommanPage = () => {
     flavor: [],
     occasion: []
   });
+  const [allCakes, setAllCakes] = useState([]);
   const [cakes, setCakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,6 +35,7 @@ const CommanPage = () => {
         setLoading(true);
         const data = await getAllCakes();
         const filterData = data.filter((e) => e.tag === id);
+        setAllCakes(filterData);
         setCakes(filterData);
         setError(null);
       } catch (err) {
@@ -44,6 +46,44 @@ const CommanPage = () => {
     };
     fetchCakes();
   }, []);
+
+  // Filtering logic
+  useEffect(() => {
+    let filtered = allCakes;
+
+    // Price Range
+    filtered = filtered.filter(
+      cake => typeof cake.price === 'number' && cake.price >= filters.priceRange[0] && cake.price <= filters.priceRange[1]
+    );
+
+    // Rating
+    if (filters.rating > 0) {
+      filtered = filtered.filter(cake => typeof cake.rating === 'number' && cake.rating >= filters.rating);
+    }
+
+    // Dietary
+    if (filters.dietary.length > 0) {
+      filtered = filtered.filter(cake =>
+        cake.dietary && Array.isArray(cake.dietary) && filters.dietary.every(diet => cake.dietary.includes(diet))
+      );
+    }
+
+    // Flavor
+    if (filters.flavor.length > 0) {
+      filtered = filtered.filter(cake =>
+        cake.flavor && Array.isArray(cake.flavor) && filters.flavor.some(flavor => cake.flavor.includes(flavor))
+      );
+    }
+
+    // Occasion
+    if (filters.occasion.length > 0) {
+      filtered = filtered.filter(cake =>
+        cake.occasion && Array.isArray(cake.occasion) && filters.occasion.some(occasion => cake.occasion.includes(occasion))
+      );
+    }
+
+    setCakes(filtered);
+  }, [filters, allCakes]);
 
   // Filter options
   const dietaryOptions = ['Eggless', 'Vegan', 'Gluten Free', 'Sugar Free'];
@@ -515,7 +555,7 @@ const CommanPage = () => {
               onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate(`/cake/${cake._id}`); }}
             >
               {/* Badge */}
-              {cake.badge && cake.badge != 'N/A'(
+              {cake.badge && cake.badge !== 'N/A' && (
                 <span className={`absolute top-3 left-3 px-3 py-1 rounded text-xs font-bold shadow ${cake.badge === 'Best Seller' ? 'bg-green-600 text-white' : 'bg-red-500 text-white'}`}>
                   {cake.badge}
                 </span>
@@ -545,4 +585,4 @@ const CommanPage = () => {
   );
 };
 
-export default CommanPage; 
+export default CommanPage;

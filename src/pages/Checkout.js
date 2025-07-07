@@ -64,6 +64,9 @@ const Checkout = () => {
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingLoading, setShippingLoading] = useState(false);
   const [orderInstruction, setOrderInstruction] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState('');
+  const [deliveryTime, setDeliveryTime] = useState('');
+
   useEffect(() => {
     // Set default address if available
     if (user?.addresses?.length > 0) {
@@ -98,8 +101,20 @@ const Checkout = () => {
       setError('Please select a shipping address');
       return;
     }
-
-    // await handlePayment();
+    // Example orderData with delivery date and time
+    const orderData = {
+      address: selectedAddress,
+      cartItems,
+      deliveryDate,
+      deliveryTime,
+      orderInstruction,
+      shippingCost,
+      tax,
+      total,
+      subtotal,
+      userId: user?._id,
+    };
+    // await handlePayment(orderData);
   };
 
   const nextStep = () => {
@@ -120,7 +135,21 @@ const Checkout = () => {
     switch (currentStep) {
       case 1:
         return (
-          <ShipAddr setSelectedAddress1={setSelectedAddress1} setShippingCost={setShippingCost} shippingCost={shippingCost} shippingLoading={shippingLoading} setShippingLoading={setShippingLoading} selectedAddress={selectedAddress} orderInstruction={orderInstruction} setOrderInstruction={setOrderInstruction} setShipping={setShipping} />
+          <ShipAddr 
+            setSelectedAddress1={setSelectedAddress1} 
+            setShippingCost={setShippingCost} 
+            shippingCost={shippingCost} 
+            shippingLoading={shippingLoading} 
+            setShippingLoading={setShippingLoading} 
+            selectedAddress={selectedAddress} 
+            orderInstruction={orderInstruction} 
+            setOrderInstruction={setOrderInstruction} 
+            setShipping={setShipping}
+            deliveryDate={deliveryDate}
+            setDeliveryDate={setDeliveryDate}
+            deliveryTime={deliveryTime}
+            setDeliveryTime={setDeliveryTime}
+          />
         );
       case 2:
         return (

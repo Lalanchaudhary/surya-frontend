@@ -257,6 +257,35 @@ const CakeDetails = () => {
     }
   }, [cakeData]);
 
+  // Add this function to handle skipping add-ons and adding only the cake
+  const handleSkipAddOns = () => {
+    if (!cakeData) return;
+    const selectedSizeData = cakeData.sizes.find(size => size.size === selectedSize);
+    if (!selectedSizeData) {
+      toast.error('Please select a size');
+      return;
+    }
+    // Add main cake only
+    const cartItem = {
+      id: cakeData._id,
+      name: cakeData.name,
+      image: cakeData.image,
+      price: selectedSizeData.price,
+      selectedSize: selectedSizeData,
+      quantity: quantity,
+      totalPrice: selectedSizeData.price * quantity
+    };
+    addToCart(cartItem);
+    setShowAddOnsModal(false);
+    setSelectedAddOns([]);
+    const token = localStorage.getItem("token");
+    if(token){
+      toast.success('Added to cart successfully!');
+    } else {
+      toast.error('Please login to add items to cart');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -704,10 +733,7 @@ const CakeDetails = () => {
                   </div>
                   <div className="flex gap-3 w-full sm:w-auto">
                     <button 
-                      onClick={() => { 
-                        setShowAddOnsModal(false); 
-                        setSelectedAddOns([]); 
-                      }} 
+                      onClick={handleSkipAddOns} 
                       className="flex-1 sm:flex-none px-4 sm:px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm sm:text-base"
                     >
                       Skip

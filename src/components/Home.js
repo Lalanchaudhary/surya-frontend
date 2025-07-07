@@ -4,6 +4,7 @@ import cake from '../assets/cake.jpg';
 import SubNavbar from './SubNavbar';
 import HeroCarousel from './HeroCarousel';
 import CakeGallery from './CakeGallery';
+import TermsandConditions from './TermsandConditions';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ const Home = () => {
       <SubNavbar />
       <HeroCarousel/>
       <CakeGallery/>
+      <TermsandConditions/>
       {/* Dynamic Review Section */}
       {(() => {
         const reviews = [

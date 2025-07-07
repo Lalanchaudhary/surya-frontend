@@ -29,7 +29,7 @@ import { useCart } from "../../context/CartContext";
 import { getAllAdmins } from '../../services/adminService';
 import { getDistanceFromLatLonInKm } from '../../lib/utils';
 
-const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoading, setShippingLoading, selectedAddress: selectedAddressProp, onOrderInstructionChange ,orderInstruction ,setOrderInstruction ,setShipping})=>{
+const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoading, setShippingLoading, selectedAddress: selectedAddressProp, onOrderInstructionChange ,orderInstruction ,setOrderInstruction ,setShipping, deliveryDate, setDeliveryDate, deliveryTime, setDeliveryTime})=>{
     const { cartItems } = useCart();
     const { user, addAddress, updateAddress, deleteAddress } = useUser();
     const [currentStep, setCurrentStep] = useState(1);
@@ -50,6 +50,8 @@ const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoa
         },
         isDefault: false
       });
+    const [selectedDeliveryDate, setSelectedDeliveryDate] = useState(deliveryDate || '');
+    const [selectedDeliveryTime, setSelectedDeliveryTime] = useState(deliveryTime || '');
 
       const setSelectAdr=(address)=>{
         setSelectedAddress(address);
@@ -114,6 +116,11 @@ const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoa
         };
         calculateShipping();
     }, [selectedAddress, setShippingCost, setShippingLoading]);
+
+      useEffect(() => {
+        if (setDeliveryDate) setDeliveryDate(selectedDeliveryDate);
+        if (setDeliveryTime) setDeliveryTime(selectedDeliveryTime);
+      }, [selectedDeliveryDate, selectedDeliveryTime, setDeliveryDate, setDeliveryTime]);
 
       const handleAddressOpen = (address = null) => {
         if (address) {
@@ -204,6 +211,25 @@ const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoa
               >
                 Add New Address
               </Button>
+            </div>
+            {/* Delivery Date and Time Fields */}
+            <div className="flex flex-col md:flex-row gap-4 mb-4">
+              <TextField
+                label="Delivery Date"
+                type="date"
+                value={selectedDeliveryDate}
+                onChange={e => setSelectedDeliveryDate(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+                className="w-full md:w-1/2"
+              />
+              <TextField
+                label="Delivery Time"
+                type="time"
+                value={selectedDeliveryTime}
+                onChange={e => setSelectedDeliveryTime(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+                className="w-full md:w-1/2"
+              />
             </div>
             {user?.addresses?.length === 0 ? (
               <Typography color="textSecondary" align="center" sx={{ py: 2 }}>
