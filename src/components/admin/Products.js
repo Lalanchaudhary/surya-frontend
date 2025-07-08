@@ -259,6 +259,14 @@ const Products = () => {
     );
   }
 
+  // Group products by tag
+  const groupedProducts = products.reduce((acc, product) => {
+    const tag = product.tag || 'Untagged';
+    if (!acc[tag]) acc[tag] = [];
+    acc[tag].push(product);
+    return acc;
+  }, {});
+
   return (
     <Box p={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
@@ -275,59 +283,67 @@ const Products = () => {
         </Button>
       </Box>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Image</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Flavor</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Original Price</TableCell>
-              <TableCell>Rating</TableCell>
-              <TableCell>Reviews</TableCell>
-              <TableCell>Label</TableCell>
-              <TableCell>Tag</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map((product) => (
-              <TableRow key={product._id}>
-                <TableCell>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    style={{ width: 50, height: 50, objectFit: 'cover' }}
-                  />
-                </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.flavor}</TableCell>
-                <TableCell>₹{product.price.toFixed(2)}</TableCell>
-                <TableCell>{product.original_price ? `₹${product.original_price.toFixed(2)}` : '-'}</TableCell>
-                <TableCell>{product.rating}</TableCell>
-                <TableCell>{product.reviews}</TableCell>
-                <TableCell>{product.label}</TableCell>
-                <TableCell>{product.tag}</TableCell>
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleEditProduct(product)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleDeleteProduct(product._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {/* Render products grouped by tag */}
+      {Object.keys(groupedProducts).map((tag) => (
+        <Box key={tag} mb={4}>
+          <Typography variant="h6" color="primary" gutterBottom>
+            {tag}
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Image</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Flavor</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Original Price</TableCell>
+                  <TableCell>Rating</TableCell>
+                  <TableCell>Reviews</TableCell>
+                  <TableCell>Label</TableCell>
+                  <TableCell>Tag</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {groupedProducts[tag].map((product) => (
+                  <TableRow key={product._id}>
+                    <TableCell>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        style={{ width: 50, height: 50, objectFit: 'cover' }}
+                      />
+                    </TableCell>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>{product.flavor}</TableCell>
+                    <TableCell>₹{product.price.toFixed(2)}</TableCell>
+                    <TableCell>{product.original_price ? `₹${product.original_price.toFixed(2)}` : '-'}</TableCell>
+                    <TableCell>{product.rating}</TableCell>
+                    <TableCell>{product.reviews}</TableCell>
+                    <TableCell>{product.label}</TableCell>
+                    <TableCell>{product.tag}</TableCell>
+                    <TableCell>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleEditProduct(product)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleDeleteProduct(product._id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      ))}
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="md" fullWidth>
         <DialogTitle>

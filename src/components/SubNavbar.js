@@ -36,16 +36,16 @@ const menuItems = [
       {
         title: 'Character Cakes',
         items: [
-          { name: 'Spiderman Cakes', href: 'spiderman-cakes' },
-          { name: 'Unicorn Cakes', href: 'unicorn-cakes' },
-          { name: 'Barbie Cakes', href: 'barbie-cakes' },
-          { name: 'Avenger Cakes', href: 'avenger-cakes' },
-          { name: 'Peppa Pig Cakes', href: 'peppa-pig-cakes' },
-          { name: 'Doraemon Cakes', href: 'doraemon-cakes' },
-          { name: 'Naruto Cakes', href: 'naruto-cakes' },
-          { name: 'Cocomelon Cakes', href: 'cocomelon-cakes' },
-          { name: 'Cartoon Cakes', href: 'cartoon-cakes' },
-          { name: 'Super Hero Cakes', href: 'super-hero-cakes' },
+          { name: 'spiderman-cakes', href: 'spiderman-cakes' },
+          { name: 'unicorn-cakes', href: 'unicorn-cakes' },
+          { name: 'barbie-cakes', href: 'barbie-cakes' },
+          { name: 'avenger-cakes', href: 'avenger-cakes' },
+          { name: 'peppa-pig-cakes', href: 'peppa-pig-cakes' },
+          { name: 'doraemon-cakes', href: 'doraemon-cakes' },
+          { name: 'naruto-cakes', href: 'naruto-cakes' },
+          { name: 'cocomelon-cakes', href: 'cocomelon-cakes' },
+          { name: 'cartoon-cakes', href: 'cartoon-cakes' },
+          { name: 'super-hero-cakes', href: 'super-hero-cakes' },
         ]
       },
       {
@@ -75,32 +75,32 @@ const menuItems = [
   {
     label: 'Birthday',
     dropdown: [
-      { name: 'Birthday Cakes', href: 'Birthday' },
-      { name: '1st Birthday Cakes', href: 'Birthday' },
-      { name: 'Birthday Photo Cakes', href: 'Birthday' },
-      { name: 'Half Birthday Cakes', href: 'Birthday' },
+      { name: 'Birthday Cakes', href: 'Birthday Cakes' },
+      { name: '1st-Birthday-Cakes', href: '1st-Birthday-Cakes' },
+      { name: 'Birthday-Photo-Cakes', href: 'Birthday-Photo-Cakes' },
+      { name: 'Half-Birthday-Cakes', href: 'Half-Birthday-Cakes' },
     ],
   },
       {
     label: 'Photo Cakes',
     dropdown: [
-      { name: 'Photo Cakes', href: 'Photo-cakes' },
-      { name: 'Name Cakes', href: 'Photo-cakes' },
-      { name: 'Designer Cakes', href: 'Photo-cakes' },
-      { name: '3D Cakes', href: 'Photo-cakes' },
-      { name: 'Fondant Cakes', href: 'Photo-cakes' },
-      { name: 'Custom Flavors', href: 'Photo-cakes' },
+      { name: 'Photo-Cakes', href: 'Photo-cakes' },
+      { name: 'Name-Cakes', href: 'Photo-cakes' },
+      { name: 'Designer-Cakes', href: 'Photo-cakes' },
+      { name: '3D-Cakes', href: 'Photo-cakes' },
+      { name: 'Fondant-Cakes', href: 'Photo-cakes' },
+      { name: 'Custom-Flavors', href: 'Photo-cakes' },
     ],
   },
   {
     label: 'Anniversary',
     dropdown: [
-      { name: '1st-anniversary-cakes', href: 'Anniversary' },
-      { name: 'Dating Anniversary', href: 'Anniversary' },
-      { name: 'Work Anniversary', href: 'Anniversary' },
-      { name: 'Friendship Anniversary', href: 'Anniversary' },
-      { name: 'Anniversary Combos', href: 'Anniversary' },
-      { name: 'Anniversary Specials', href: 'Anniversary' },
+      { name: '1st-anniversary-cakes', href: '1st-anniversary-cakes' },
+      { name: 'Dating-Anniversary', href: 'Dating-Anniversary' },
+      { name: 'Work-Anniversary', href: 'Work-Anniversary' },
+      { name: 'Friendship-Anniversary', href: 'Friendship-Anniversary' },
+      { name: 'Anniversary-Combos', href: 'Anniversary-Combos' },
+      { name: 'Anniversary-Specials', href: 'Anniversary-Specials' },
     ],
   },
   {
@@ -109,22 +109,22 @@ const menuItems = [
       {
         title: 'Festive Celebrations',
         items: [
-          { name: 'Friendship Day Cakes', href: '1st-birthday-cakes' },
-          { name: 'Independence Day Cakes', href: 'princess-cakes' },
-          { name: 'Rakhi Cakes', href: 'animal-cakes' },
-          { name: 'Janmashtami Cakes', href: 'masha-bear-cakes' },
-          { name: 'Teachers Day Cakes', href: 'cakes-for-boys' },
-          { name: 'Ganesh Chaturthi Cakes', href: 'animal-cakes' },
+          { name: 'Friendship-Day-Cakes', href: 'Friendship-Day-Cakes' },
+          { name: 'Independence-Day-Cakes', href: 'Independence-Day-Cakes' },
+          { name: 'Rakhi-Cakes', href: 'Rakhi-Cakes' },
+          { name: 'Janmashtami-Cakes', href: 'Janmashtami-Cakes' },
+          { name: 'Teachers-Day-Cakes', href: 'Teachers-Day-Cakes' },
+          { name: 'Ganesh-Chaturthi-Cakes', href: 'Ganesh-Chaturthi-Cakes' },
         ]
       },
       {
         title: 'Special Milestones',
         items: [
-          { name: 'Baby Shower Cakes', href: 'cakes-for-boys' },
-          { name: 'Congratulations Cakes', href: 'unicorn-cakes' },
-          { name: 'Retirement Cakes', href: 'barbie-cakes' },
-          { name: 'Farewell Cakes', href: 'avenger-cakes' },
-          { name: 'Wedding Cakes', href: 'peppa-pig-cakes' },
+          { name: 'Baby-Shower-Cakes', href: 'Baby-Shower-Cakes' },
+          { name: 'Congratulations-Cakes', href: 'Congratulations-Cakes' },
+          { name: 'Retirement-Cakes', href: 'Retirement-Cakes' },
+          { name: 'Farewell-Cakes', href: 'Farewell-Cakes' },
+          { name: 'Wedding-Cakes', href: 'Wedding-Cakes' },
         ]
       },
     ]
@@ -135,21 +135,21 @@ const menuItems = [
       {
         title: 'For Him',
         items: [
-          { name: 'Cakes For Friend', href: '1st-birthday-cakes' },
-          { name: 'Cakes For Father', href: 'princess-cakes' },
-          { name: 'Cakes For Husband', href: 'animal-cakes' },
-          { name: 'Cakes For Brother', href: 'masha-bear-cakes' },
-          { name: 'Cakes For Boyfriend', href: 'cakes-for-boys' },
+          { name: 'Cakes-For-Friend', href: 'Cakes-For-Friend' },
+          { name: 'Cakes-For-Father', href: 'Cakes-For-Father' },
+          { name: 'Cakes-For-Husband', href: 'Cakes-For-Husband' },
+          { name: 'Cakes-For-Brother', href: 'Cakes-For-Brother' },
+          { name: 'Cakes-For-Boyfriend', href: 'Cakes-For-Boyfriend' },
         ]
       },
       {
         title: 'For Her',
         items: [
-          { name: 'Cakes For Friend', href: 'spiderman-cakes' },
-          { name: 'Cakes For Mother', href: 'unicorn-cakes' },
-          { name: 'Cakes For Wife', href: 'barbie-cakes' },
-          { name: 'Cakes For Girlfriend', href: 'avenger-cakes' },
-          { name: 'Cakes For Sister', href: 'peppa-pig-cakes' },
+          { name: 'Cakes-For-Friend', href: 'Cakes-For-Friend' },
+          { name: 'Cakes-For-Mother', href: 'Cakes-For-Mother' },
+          { name: 'Cakes-For-Wife', href: 'Cakes-For-Wife' },
+          { name: 'Cakes-For-Girlfriend', href: 'Cakes-For-Girlfriend' },
+          { name: 'Cakes-For-Sister', href: 'Cakes-For-Sister' },
         ]
       },
     ]
