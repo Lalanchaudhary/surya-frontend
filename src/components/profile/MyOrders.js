@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../../context/UserContext';
 import * as userService from '../../services/userService';
-import { 
-  FiEye, 
-  FiX, 
-  FiTruck, 
-  FiCheckCircle, 
+import {
+  FiEye,
+  FiX,
+  FiTruck,
+  FiCheckCircle,
   FiClock,
   FiPackage
 } from 'react-icons/fi';
 import logo from '../../assets/suryalogo.png'
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Image, Svg, Path, Rect, Circle } from '@react-pdf/renderer';
 
 const OrderDetail = ({ order, onClose, onCancel }) => {
   const [cancelDialog, setCancelDialog] = useState(false);
@@ -61,7 +61,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       borderBottomWidth: 1
     },
     logo: {
-      height:75
+      height: 75
     },
     title: {
       fontSize: 40,
@@ -92,7 +92,8 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       padding: 5,
       textAlign: 'center',
       fontWeight: 'bold',
-      color: '#fff'
+      color: '#fff',
+      borderColor:'#fff'
     },
     tableRow1: {
       flexDirection: 'row',
@@ -114,14 +115,6 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     tableCol: {
       width: '33%',
     },
-    footer: {
-      position: 'absolute',
-      bottom: 20,
-      width: '100%'
-    },
-    subtotalHeadRow: {
-
-    },
     subtotalRow: {
       width: 150,
       flexDirection: 'row',
@@ -141,13 +134,18 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       backgroundColor: 'red',
       padding: 2
     },
+    footer: {
+      position: 'absolute',
+      bottom: 10,
+      width: '106%',
+      left:15
+    },
     footerInner: {
       width: '88%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
       fontSize: 10,
       padding: 10,
-      paddingBottom: 0
+      paddingBottom: 0,
+      marginLeft:335
     },
     bold: {
       fontWeight: 'bold',
@@ -175,7 +173,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       taxRate: order.taxRate || 0,
       tax: order.tax || 0,
       total: order.totalAmount || 0,
-      shipping:order.shippingcharge|| 0
+      shipping: order.shippingcharge || 0
     };
 
     return (
@@ -193,9 +191,11 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
               <Text style={{ fontSize: 16, marginVertical: 5, fontWeight: 'bold' }}>Mr/Ms. {billData.customer.displayName}</Text>
               <Text style={{ fontSize: 10, marginVertical: 2 }}>Phone: {billData.customer.mobile}</Text>
               <Text style={{ fontSize: 10, marginVertical: 2 }}>Email: {billData.customer.email}</Text>
+              <Text style={{ fontSize: 10, marginVertical: 2 }}>Address: {order.shippingAddress.street} {order.shippingAddress.pincode}, {order.shippingAddress.city}, {order.shippingAddress.state}</Text>
             </View>
             <View>
               <Text style={[styles.invoiceDetails, { fontSize: 14, fontWeight: 'bold' }]}>Invoice No. INV-{billData.invoiceNumber}</Text>
+              <Text style={[styles.invoiceDetails, { fontSize: 14, fontWeight: 'bold' }]}>GST No. - 09FYDPS8223M1ZO</Text>
               <Text style={[styles.invoiceDetails]}>Date: {new Date(billData.invoiceDate).toLocaleDateString()}</Text>
             </View>
           </View>
@@ -243,9 +243,55 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
           {/* Footer */}
           <View style={styles.footer}>
             <View style={styles.footerInner}>
-              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-end', marginTop: 20 }}>
+              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-end', marginVertical: 20 }}>
                 <Text style={styles.bold}>Authorized Signature</Text>
                 <View style={{ height: 1, width: 120, backgroundColor: '#000' }}></View>
+              </View>
+            </View>
+            
+            {/* Contact Info Section */}
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: 20,
+              paddingHorizontal: 10,
+              borderTopColor: 'red',
+              borderTopWidth: 2
+            }}>
+              {/* Phone */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Phone Icon using @react-pdf/renderer Svg */}
+                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
+                  <Path d="M22 16.92V21a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3 5.18 2 2 0 0 1 5 3h4.09a2 2 0 0 1 2 1.72c.13 1.13.37 2.23.72 3.28a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c1.05.35 2.15.59 3.28.72A2 2 0 0 1 22 16.92z" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </Svg>
+                <Text style={{ fontSize: 10 }}>7503500400</Text>
+              </View>
+              {/* Email */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Email Icon using @react-pdf/renderer Svg */}
+                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
+                  <Rect x={2} y={4} width={20} height={16} rx={2} stroke="#ED3500" strokeWidth={2} fill="none" />
+                  <Path d="M22,6 L12,13 L2,6" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </Svg>
+                <Text style={{ fontSize: 10 }}>Info@suryacake.in</Text>
+              </View>
+              {/* Address */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Location Icon using @react-pdf/renderer Svg */}
+                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
+                  <Path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1 1 18 0z" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  <Circle cx={12} cy={10} r={3} stroke="#ED3500" strokeWidth={2} fill="none" />
+                </Svg>
+                <Text style={{ fontSize: 10 }}>Sector 128, Noida, Utter Pradesh</Text>
+              </View>
+              {/* Website */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Globe Icon using @react-pdf/renderer Svg */}
+                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
+                  <Path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 0c2.5 2.5 2.5 15.5 0 18m0-18c-2.5 2.5-2.5 15.5 0 18m-8-9h16" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </Svg>
+                <Text style={{ fontSize: 10 }}>www.suryacake.in</Text>
               </View>
             </View>
           </View>
@@ -260,11 +306,10 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
         <div className="p-6 border-b">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-semibold text-gray-900">Order #{order.orderId}</h3>
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-              order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-              order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
-            }`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
+                  'bg-yellow-100 text-yellow-800'
+              }`}>
               {order.status}
             </span>
           </div>
@@ -282,9 +327,8 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
             <div className="flex justify-between relative">
               {['Pending', 'Processing', 'Shipped', 'Delivered'].map((step, index) => (
                 <div key={step} className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    getStatusStep(order.status) >= index ? 'bg-[#e098b0] text-white' : 'bg-gray-200'
-                  }`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusStep(order.status) >= index ? 'bg-[#e098b0] text-white' : 'bg-gray-200'
+                    }`}>
                     {index + 1}
                   </div>
                   <span className="text-sm mt-2 text-gray-600">{step}</span>
@@ -349,14 +393,14 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
                   </div>
                 </div>
               ))}
-                              <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping Charge</span>
-                  <span>₹{order.shippingcharge?.toFixed(2) ?? '0.00'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Tax</span>
-                  <span>₹{order.tax?.toFixed(2) ?? '0.00'}</span>
-                </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Shipping Charge</span>
+                <span>₹{order.shippingcharge?.toFixed(2) ?? '0.00'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Tax</span>
+                <span>₹{order.tax?.toFixed(2) ?? '0.00'}</span>
+              </div>
               <div className="border-t pt-4 flex justify-between font-semibold">
                 <span>Total Amount</span>
                 <span>₹{order.totalAmount.toFixed(2)}</span>
@@ -503,11 +547,10 @@ const MyOrders = () => {
                 <p className="text-sm text-gray-500">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
               </div>
               <div className="mt-2 sm:mt-0 flex items-center gap-2">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                  order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-                  'bg-yellow-100 text-yellow-800'
-                }`}>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                    order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
+                      'bg-yellow-100 text-yellow-800'
+                  }`}>
                   {order.status}
                 </span>
                 {order.status === 'Pending' && (
@@ -527,7 +570,7 @@ const MyOrders = () => {
                 </button>
               </div>
             </div>
-            
+
             <div className="border-t pt-4">
               <div className="space-y-2">
                 {order.items.map((item, index) => (
@@ -536,7 +579,7 @@ const MyOrders = () => {
                     <span>₹{item.price.toFixed(2)}</span>
                   </div>
                 ))}
-                                <div className="flex justify-between">
+                <div className="flex justify-between">
                   <span className="text-gray-600">Shipping Charge</span>
                   <span>₹{order.shippingcharge?.toFixed(2) ?? '0.00'}</span>
                 </div>
