@@ -28,6 +28,7 @@ const CommanPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [sortBy, setSortBy] = useState('Popularity');
 
   useEffect(() => {
     const fetchCakes = async () => {
@@ -82,8 +83,26 @@ const CommanPage = () => {
       );
     }
 
-    setCakes(filtered);
-  }, [filters, allCakes]);
+    // Sorting
+    let sorted = [...filtered];
+    switch (sortBy) {
+      case 'Price: Low to High':
+        sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
+        break;
+      case 'Price: High to Low':
+        sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case 'Rating':
+        sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+      default:
+        // Popularity or default: sort by review count descending
+        sorted.sort((a, b) => (b.reviews || b.reviewCount || 0) - (a.reviews || a.reviewCount || 0));
+        break;
+    }
+
+    setCakes(sorted);
+  }, [filters, allCakes, sortBy]);
 
   // Filter options
   const dietaryOptions = ['Eggless', 'Vegan', 'Gluten Free', 'Sugar Free'];
@@ -520,12 +539,24 @@ const CommanPage = () => {
           </div>
           <div className="flex flex-wrap gap-2 items-center">
             <div className="flex items-center gap-1 bg-white px-3 py-2 rounded shadow-sm">
-              <span className="font-medium text-gray-700 text-sm">Delivery Date</span>
-              <input type="date" className="ml-2 border rounded px-2 py-1 text-sm" />
-            </div>
-            <div className="flex items-center gap-1 bg-white px-3 py-2 rounded shadow-sm">
               <span className="font-medium text-gray-700 text-sm">Filter By Price</span>
-              <select className="ml-2 border rounded px-2 py-1 text-sm">
+              <select
+                className="ml-2 border rounded px-2 py-1 text-sm"
+                value={(() => {
+                  if (filters.priceRange[0] === 0 && filters.priceRange[1] === 2000) return 'All Products';
+                  if (filters.priceRange[0] === 0 && filters.priceRange[1] === 500) return 'Under ₹500';
+                  if (filters.priceRange[0] === 500 && filters.priceRange[1] === 1000) return '₹500 - ₹1000';
+                  if (filters.priceRange[0] === 1000 && filters.priceRange[1] === 2000) return 'Above ₹1000';
+                  return 'All Products';
+                })()}
+                onChange={e => {
+                  const val = e.target.value;
+                  if (val === 'All Products') handleFilterChange('priceRange', [0, 2000]);
+                  else if (val === 'Under ₹500') handleFilterChange('priceRange', [0, 500]);
+                  else if (val === '₹500 - ₹1000') handleFilterChange('priceRange', [500, 1000]);
+                  else if (val === 'Above ₹1000') handleFilterChange('priceRange', [1000, 2000]);
+                }}
+              >
                 <option>All Products</option>
                 <option>Under ₹500</option>
                 <option>₹500 - ₹1000</option>
@@ -534,7 +565,11 @@ const CommanPage = () => {
             </div>
             <div className="flex items-center gap-1 bg-white px-3 py-2 rounded shadow-sm">
               <span className="font-medium text-gray-700 text-sm">Sort By</span>
-              <select className="ml-2 border rounded px-2 py-1 text-sm">
+              <select
+                className="ml-2 border rounded px-2 py-1 text-sm"
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
+              >
                 <option>Popularity</option>
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>

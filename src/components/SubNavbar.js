@@ -75,12 +75,10 @@ const menuItems = [
   {
     label: 'Birthday',
     dropdown: [
-      { name: 'Kids Birthday', href: 'Birthday' },
-      { name: 'Adult Birthday', href: 'Birthday' },
-      { name: 'Milestone Birthday', href: 'Birthday' },
-      { name: 'Surprise Birthday', href: 'Birthday' },
-      { name: 'Birthday Combos', href: 'Birthday' },
-      { name: 'Birthday Specials', href: 'Birthday' },
+      { name: 'Birthday Cakes', href: 'Birthday' },
+      { name: '1st Birthday Cakes', href: 'Birthday' },
+      { name: 'Birthday Photo Cakes', href: 'Birthday' },
+      { name: 'Half Birthday Cakes', href: 'Birthday' },
     ],
   },
       {
@@ -107,37 +105,55 @@ const menuItems = [
   },
   {
     label: 'Occasion',
-    dropdown: [
-      { name: 'FriendShip Day', href: '/friendshipday-cakes' },
-      { name: 'Baby Shower', href: '/all-cakes' },
-      { name: 'Graduation', href: '/graduation-cakes' },
-      { name: 'House Warming', href: '/all-cakes' },
-      { name: 'Farewell', href: '/all-cakes' },
-      { name: 'Congratulations', href: '/all-cakes' },
-    ],
+    dropdownGroups: [
+      {
+        title: 'Festive Celebrations',
+        items: [
+          { name: 'Friendship Day Cakes', href: '1st-birthday-cakes' },
+          { name: 'Independence Day Cakes', href: 'princess-cakes' },
+          { name: 'Rakhi Cakes', href: 'animal-cakes' },
+          { name: 'Janmashtami Cakes', href: 'masha-bear-cakes' },
+          { name: 'Teachers Day Cakes', href: 'cakes-for-boys' },
+          { name: 'Ganesh Chaturthi Cakes', href: 'animal-cakes' },
+        ]
+      },
+      {
+        title: 'Special Milestones',
+        items: [
+          { name: 'Baby Shower Cakes', href: 'cakes-for-boys' },
+          { name: 'Congratulations Cakes', href: 'unicorn-cakes' },
+          { name: 'Retirement Cakes', href: 'barbie-cakes' },
+          { name: 'Farewell Cakes', href: 'avenger-cakes' },
+          { name: 'Wedding Cakes', href: 'peppa-pig-cakes' },
+        ]
+      },
+    ]
   },
   {
     label: 'By Relationship',
-    dropdown: [
-      { name: 'For Parents', href: 'all-cakes' },
-      { name: 'For Siblings', href: 'all-cakes' },
-      { name: 'For Friends', href: '/all-cakes' },
-      { name: 'For Colleagues', href: '/all-cakes' },
-      { name: 'For Children', href: '/all-cakes' },
-      { name: 'For Grandparents', href: '/all-cakes' },
-    ],
-  },
-  {
-    label: 'Customized Cakes',
-    dropdown: [
-      { name: 'Photo Cakes', href: '/all-cakes' },
-      { name: 'Name Cakes', href: '/all-cakes' },
-      { name: 'Designer Cakes', href: '/all-cakes' },
-      { name: '3D Cakes', href: '/all-cakes' },
-      { name: 'Fondant Cakes', href: '/all-cakes' },
-      { name: 'Custom Flavors', href: '/all-cakes' },
-    ],
-  },
+    dropdownGroups: [
+      {
+        title: 'For Him',
+        items: [
+          { name: 'Cakes For Friend', href: '1st-birthday-cakes' },
+          { name: 'Cakes For Father', href: 'princess-cakes' },
+          { name: 'Cakes For Husband', href: 'animal-cakes' },
+          { name: 'Cakes For Brother', href: 'masha-bear-cakes' },
+          { name: 'Cakes For Boyfriend', href: 'cakes-for-boys' },
+        ]
+      },
+      {
+        title: 'For Her',
+        items: [
+          { name: 'Cakes For Friend', href: 'spiderman-cakes' },
+          { name: 'Cakes For Mother', href: 'unicorn-cakes' },
+          { name: 'Cakes For Wife', href: 'barbie-cakes' },
+          { name: 'Cakes For Girlfriend', href: 'avenger-cakes' },
+          { name: 'Cakes For Sister', href: 'peppa-pig-cakes' },
+        ]
+      },
+    ]
+  }
 ];
 
 const SubNavbar = ({ vertical = false }) => {

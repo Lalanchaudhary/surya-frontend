@@ -16,9 +16,6 @@ const CakeGallery = () => {
       try {
         setLoading(true);
         const data = await getAllCakes();
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
         setCakes(data);
         setError(null);
       } catch (err) {
