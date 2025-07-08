@@ -37,7 +37,7 @@ const menuItems = [
         title: 'Character Cakes',
         items: [
           { name: 'spiderman-cakes', href: 'spiderman-cakes' },
-          { name: 'unicorn-cakes', href: 'unicorn-cakes' },
+          { name: 'unicorn-cake', href: 'unicorn-cake' },
           { name: 'barbie-cakes', href: 'barbie-cakes' },
           { name: 'avenger-cakes', href: 'avenger-cakes' },
           { name: 'peppa-pig-cakes', href: 'peppa-pig-cakes' },
