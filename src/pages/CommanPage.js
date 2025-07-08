@@ -35,7 +35,7 @@ const CommanPage = () => {
       try {
         setLoading(true);
         const data = await getAllCakes();
-        const filterData = data.filter((e) => e.tag === id);
+        const filterData = data.filter((e) => e.tag == id);
         setAllCakes(filterData);
         setCakes(filterData);
         setError(null);

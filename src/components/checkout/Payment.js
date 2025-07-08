@@ -32,7 +32,7 @@ import {
   getPaymentMethods
 } from '../../services/paymentServices';
 import { toast } from 'react-toastify';
-const Payment = ({ selectedAddress ,orderInstruction ,tax ,shipping}) => {
+const Payment = ({ selectedAddress ,orderInstruction ,tax ,shipping , deliveryDate , deliveryTime}) => {
   const navigate = useNavigate();
   const { cartItems, removeFromCart } = useCart();
   const { user } = useUser();
@@ -116,6 +116,10 @@ const Payment = ({ selectedAddress ,orderInstruction ,tax ,shipping}) => {
           price: item.price,
         })),
         totalAmount: total,
+        tax: tax,
+        shippingcharge: shipping,
+        deliveryDate:deliveryDate,
+        deliveryTime:deliveryTime,
         shippingAddress: selectedAddress,
         orderInstruction:orderInstruction,
         userId: user._id,

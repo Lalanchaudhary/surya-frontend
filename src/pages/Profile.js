@@ -5,11 +5,13 @@ import { app } from '../Firebase';
 import { checkPhoneNumber, register } from '../services/userService';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CelebrationModal from './CelebrationModel';
 const Profile = () => {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [loading,setLoading]=useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const [formData, setFormData] = useState({
     phoneNumber: '',
     otp: '',
@@ -37,16 +39,30 @@ const Profile = () => {
         throw new Error('Please enter a valid phone number');
       }
 
+      // Clean up previous reCAPTCHA if it exists
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      }
+      window.confirmationResult = null;
+
+      // Remove and re-add the recaptcha-container to reset the DOM element
+      const recaptchaDiv = document.getElementById('recaptcha-container');
+      if (recaptchaDiv) {
+        recaptchaDiv.parentNode.removeChild(recaptchaDiv);
+        const newDiv = document.createElement('div');
+        newDiv.id = 'recaptcha-container';
+        // Insert the new div at the end of the body
+        document.body.appendChild(newDiv);
+      }
 
       // Setup reCAPTCHA
-      if (!window.recaptchaVerifier) {
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-          size: 'invisible',
-          callback: (response) => {
-            console.log('reCAPTCHA verified');
-          },
-        });
-      }
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: 'invisible',
+        callback: (response) => {
+          console.log('reCAPTCHA verified');
+        },
+      });
 
       const appVerifier = window.recaptchaVerifier;
       const fullPhone = formData.phoneNumber.startsWith('+')
@@ -66,9 +82,6 @@ const Profile = () => {
         progress: undefined,
         theme: "light",
       });
-      
-      
-      // alert("OTP sent to " + fullPhone);
     } catch (err) {
       console.error('Error sending OTP:', err);
       setError(err.message || 'Failed to send OTP. Try again.');
@@ -127,10 +140,7 @@ const Profile = () => {
         email: formData.email,
         phoneNumber: formData.phoneNumber,
       });
-      navigate('/user-profile');
-      setTimeout(() => {
-        window.location.reload(); // Then refresh
-      }, 100); // Small delay to allow navigation to complete
+      setShowCelebration(true);
 
       // User will be automatically redirected after successful registration
       // as the register service handles token and user storage
@@ -139,11 +149,30 @@ const Profile = () => {
       setError(err.message || 'Failed to complete profile. Please try again.');
     }
   };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 p-3 lg:p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
     <ToastContainer/>
     <div className="min-h-screen bg-gray-50 flex flex-col py-12 px-4 lg:px-8">
+    <CelebrationModal
+          isOpen={showCelebration}
+          onClose={() => {
+            setShowCelebration(false);
+            navigate('/user-profile');  // First navigate
+            setTimeout(() => {
+              window.location.reload(); // Then refresh
+            }, 100); // Small delay to allow navigation to complete
+          }}
+        />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {isOtpVerified ? 'Complete Your Profile' : isOtpSent ? 'Enter OTP' : 'Login with Phone Number'}
@@ -264,6 +293,20 @@ const Profile = () => {
                   setIsOtpSent(false);
                   setError('');
                   setFormData({ ...formData, otp: '' });
+                  // Clean up reCAPTCHA when changing phone number
+                  if (window.recaptchaVerifier) {
+                    window.recaptchaVerifier.clear();
+                    window.recaptchaVerifier = null;
+                  }
+                  window.confirmationResult = null;
+                  // Remove and re-add the recaptcha-container to reset the DOM element
+                  const recaptchaDiv = document.getElementById('recaptcha-container');
+                  if (recaptchaDiv) {
+                    recaptchaDiv.parentNode.removeChild(recaptchaDiv);
+                    const newDiv = document.createElement('div');
+                    newDiv.id = 'recaptcha-container';
+                    document.body.appendChild(newDiv);
+                  }
                 }}
                 className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e098b0]"
               >

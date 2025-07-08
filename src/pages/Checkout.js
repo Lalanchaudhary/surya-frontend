@@ -153,7 +153,7 @@ const Checkout = () => {
         );
       case 2:
         return (
-          <Payment selectedAddress={selectedAddress} orderInstruction={orderInstruction} tax={tax} shipping={shipping}/>
+          <Payment selectedAddress={selectedAddress} orderInstruction={orderInstruction} tax={tax} shipping={shipping} deliveryDate={deliveryDate} deliveryTime={deliveryTime} />
         );
       case 3:
         return (
