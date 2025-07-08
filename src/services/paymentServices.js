@@ -159,12 +159,7 @@ const handleCODPayment = async (orderData) => {
   console.log("cod pe");
   
   try {
-    const response = await api.post('/payment/cod', {
-      items: orderData.items,
-      totalAmount: orderData.totalAmount,
-      shippingAddress: orderData.shippingAddress,
-      orderInstruction:orderData.orderInstruction
-    });
+    const response = await api.post('/payment/cod', orderData);
     return response.data;
   } catch (error) {
     console.error('COD payment error:', error);
@@ -175,12 +170,7 @@ const handleCODPayment = async (orderData) => {
 // Handle Wallet Payment
 const handleWalletPayment = async (orderData) => {
   try {
-    const response = await api.post('/payment/payment/wallet', {
-      items: orderData.items,
-      totalAmount: orderData.totalAmount,
-      shippingAddress: orderData.shippingAddress,
-      orderInstruction:orderData.orderInstruction
-    });
+    const response = await api.post('/payment/payment/wallet', orderData);
     return response.data;
   } catch (error) {
     console.error('Wallet payment error:', error);

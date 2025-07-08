@@ -5,13 +5,10 @@ import AddressBook from '../components/profile/AddressBook';
 import { getProfile, logout, updateProfile } from '../services/userService';
 import Loading from '../components/Loading';
 import MyWallet from '../components/profile/MyWallet';
-
 const TABS = [
   { id: 'address', label: 'My Addresses' },
   { id: 'wallet', label: 'My Wallet' },
   { id: 'orders', label: 'My Orders' },
-  { id: 'wishlist', label: 'My Wishlist' },
-  { id: 'account', label: 'My Account' },
 ];
 
 const UserProfile = () => {

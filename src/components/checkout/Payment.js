@@ -44,7 +44,7 @@ const Payment = ({ selectedAddress ,orderInstruction ,tax ,shipping , deliveryDa
   const total = subtotal+ shipping + tax ;
 
   console.log('====================================');
-  console.log(subtotal ," + ",shipping , " + ",tax);
+  console.log(subtotal ," + ",shipping , " + ",tax ,deliveryDate,deliveryTime);
   console.log('====================================');
   const renderPaymentMethodSelection = () => {
     const paymentMethods = getPaymentMethods();
