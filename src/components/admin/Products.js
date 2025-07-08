@@ -33,6 +33,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import * as adminService from '../../services/adminService';
+import { storage } from '../../Firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -62,6 +64,9 @@ const Products = () => {
   });
   const [newProductDetail, setNewProductDetail] = useState('');
   const [editSizeIndex, setEditSizeIndex] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadError, setUploadError] = useState(null);
 
   useEffect(() => {
     loadProducts();
@@ -206,6 +211,36 @@ const Products = () => {
   const handleCancelEditSize = () => {
     setNewSize({ size: '', price: '', price_adjustment: '' });
     setEditSizeIndex(null);
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadProgress(0);
+    setUploadError(null);
+    try {
+      const storageRef = ref(storage, `product-images/${Date.now()}-${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          setUploadError(error.message);
+          setUploading(false);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setFormData(prev => ({ ...prev, image: downloadURL }));
+          setUploading(false);
+        }
+      );
+    } catch (err) {
+      setUploadError(err.message);
+      setUploading(false);
+    }
   };
 
   if (loading) {
@@ -391,14 +426,41 @@ const Products = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Image URL"
-                  name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
-                  required
-                />
+                <Box mb={1}>
+                  <TextField
+                    fullWidth
+                    label="Image URL"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleInputChange}
+                    disabled={uploading}
+                  />
+                </Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    disabled={uploading}
+                  >
+                    Upload Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handleImageUpload}
+                    />
+                  </Button>
+                  {uploading && (
+                    <Box minWidth={120}>
+                      <CircularProgress variant="determinate" value={uploadProgress} size={24} />
+                      <Typography variant="caption" ml={1}>{Math.round(uploadProgress)}%</Typography>
+                    </Box>
+                  )}
+                  {uploadError && <Alert severity="error">{uploadError}</Alert>}
+                  {formData.image && (
+                    <img src={formData.image} alt="Preview" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #eee' }} />
+                  )}
+                </Box>
               </Grid>
 
               {/* Sizes Section */}
