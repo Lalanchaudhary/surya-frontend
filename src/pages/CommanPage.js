@@ -525,16 +525,16 @@ const CommanPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header & Breadcrumb */}
         <div className="mb-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Anniversary Cakes Online</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{id} Cakes Online</h1>
           <div className="text-sm text-gray-500 mb-2">
-            Home <span className="mx-1">&gt;</span> <span className="text-gray-700 font-medium">Anniversary Cakes</span>
+            Home <span className="mx-1">&gt;</span> <span className="text-gray-700 font-medium">{id} Cakes</span>
           </div>
         </div>
         {/* Tab & Filters */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
           <div className="flex items-center gap-4">
             <div className="bg-white rounded-t-lg px-6 py-2 font-semibold text-gray-900 border-b-2 border-rose-400 shadow-sm">
-              Anniversary Cakes <span className="text-gray-500 font-normal">({cakes.length} items)</span>
+              {id} Cakes <span className="text-gray-500 font-normal">({cakes.length} items)</span>
             </div>
           </div>
           <div className="flex flex-wrap gap-2 items-center">

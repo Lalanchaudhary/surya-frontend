@@ -20,17 +20,17 @@ const menuItems = [
       {
         title: 'Kids Cakes',
         items: [
-          { name: '1st Birthday Cakes', href: '1st-birthday-cakes' },
-          { name: 'Princess Cakes', href: 'princess-cakes' },
-          { name: 'Animal Cakes', href: 'animal-cakes' },
-          { name: 'Masha & The Bear Cakes', href: 'masha-bear-cakes' },
-          { name: 'Cakes For Boys', href: 'cakes-for-boys' },
-          { name: 'Cakes For Girls', href: 'cakes-for-girls' },
-          { name: 'Number Cakes', href: 'number-cakes' },
-          { name: 'Alphabet Cakes', href: 'alphabet-cakes' },
-          { name: 'Car And Vehicle Cakes', href: 'car-vehicle-cakes' },
-          { name: 'Baby Shark Cakes', href: 'baby-shark-cakes' },
-          { name: 'All Kids Cakes', href: 'all-kids-cakes' },
+          { name: '1st-birthday-cakes', href: '1st-birthday-cakes' },
+          { name: 'princess-cakes', href: 'princess-cakes' },
+          { name: 'animal-cakes', href: 'animal-cakes' },
+          { name: 'masha-bear-cakes', href: 'masha-bear-cakes' },
+          { name: 'cakes-for-boys', href: 'cakes-for-boys' },
+          { name: 'cakes-for-girls', href: 'cakes-for-girls' },
+          { name: 'number-cakes', href: 'number-cakes' },
+          { name: 'alphabet-cakes', href: 'alphabet-cakes' },
+          { name: 'car-vehicle-cakes', href: 'car-vehicle-cakes' },
+          { name: 'baby-shark-cakes', href: 'baby-shark-cakes' },
+          { name: 'all-kids-cakes', href: 'all-kids-cakes' },
         ]
       },
       {
@@ -51,23 +51,23 @@ const menuItems = [
       {
         title: 'Grown Up Cakes',
         items: [
-          { name: 'Bride To Be Cakes', href: 'bride-to-be-cakes' },
-          { name: 'Wedding Cakes', href: 'wedding-cakes' },
-          { name: 'Gym Cakes', href: 'gym-cakes' },
-          { name: 'Party Cakes', href: 'party-cakes' },
+          { name: 'bride-to-be-cakes', href: 'bride-to-be-cakes' },
+          { name: 'wedding-cakes', href: 'wedding-cakes' },
+          { name: 'gym-cakes', href: 'gym-cakes' },
+          { name: 'party-cakes', href: 'party-cakes' },
         ]
       },
       {
         title: 'More Cakes',
         items: [
-          { name: 'Jungle Theme Cakes', href: 'jungle-theme-cakes' },
-          { name: 'Cricket Cakes', href: 'cricket-cakes' },
-          { name: 'Football Cakes', href: 'football-cakes' },
-          { name: 'Basketball Cakes', href: 'basketball-cakes' },
-          { name: 'Rainbow Cakes', href: 'rainbow-cakes' },
-          { name: 'Butterfly Cakes', href: 'butterfly-cakes' },
-          { name: 'Dinosaur Cakes', href: 'dinosaur-cakes' },
-          { name: 'All Designer Cakes', href: 'all-designer-cakes' },
+          { name: 'jungle-theme-cakes', href: 'jungle-theme-cakes' },
+          { name: 'cricket-cakes', href: 'cricket-cakes' },
+          { name: 'football-cakes', href: 'football-cakes' },
+          { name: 'basketball-cakes', href: 'basketball-cakes' },
+          { name: 'rainbow-cakes', href: 'rainbow-cakes' },
+          { name: 'butterfly-cakes', href: 'butterfly-cakes' },
+          { name: 'dinosaur-cakes', href: 'dinosaur-cakes' },
+          { name: 'all-designer-cakes', href: 'all-designer-cakes' },
         ]
       }
     ]
@@ -75,7 +75,7 @@ const menuItems = [
   {
     label: 'Birthday',
     dropdown: [
-      { name: 'Birthday Cakes', href: 'Birthday Cakes' },
+      { name: 'Birthday', href: 'Birthday' },
       { name: '1st-Birthday-Cakes', href: '1st-Birthday-Cakes' },
       { name: 'Birthday-Photo-Cakes', href: 'Birthday-Photo-Cakes' },
       { name: 'Half-Birthday-Cakes', href: 'Half-Birthday-Cakes' },
