@@ -23,14 +23,8 @@ const menuItems = [
           { name: '1st-birthday-cakes', href: '1st-birthday-cakes' },
           { name: 'princess-cakes', href: 'princess-cakes' },
           { name: 'animal-cakes', href: 'animal-cakes' },
-          { name: 'masha-bear-cakes', href: 'masha-bear-cakes' },
-          { name: 'cakes-for-boys', href: 'cakes-for-boys' },
-          { name: 'cakes-for-girls', href: 'cakes-for-girls' },
           { name: 'number-cakes', href: 'number-cakes' },
-          { name: 'alphabet-cakes', href: 'alphabet-cakes' },
           { name: 'car-vehicle-cakes', href: 'car-vehicle-cakes' },
-          { name: 'baby-shark-cakes', href: 'baby-shark-cakes' },
-          { name: 'all-kids-cakes', href: 'all-kids-cakes' },
         ]
       },
       {
@@ -38,12 +32,8 @@ const menuItems = [
         items: [
           { name: 'spiderman-cakes', href: 'spiderman-cakes' },
           { name: 'unicorn-cake', href: 'unicorn-cake' },
-          { name: 'barbie-cakes', href: 'barbie-cakes' },
-          { name: 'avenger-cakes', href: 'avenger-cakes' },
           { name: 'peppa-pig-cakes', href: 'peppa-pig-cakes' },
           { name: 'doraemon-cakes', href: 'doraemon-cakes' },
-          { name: 'naruto-cakes', href: 'naruto-cakes' },
-          { name: 'cocomelon-cakes', href: 'cocomelon-cakes' },
           { name: 'cartoon-cakes', href: 'cartoon-cakes' },
           { name: 'super-hero-cakes', href: 'super-hero-cakes' },
         ]
@@ -63,11 +53,8 @@ const menuItems = [
           { name: 'jungle-theme-cakes', href: 'jungle-theme-cakes' },
           { name: 'cricket-cakes', href: 'cricket-cakes' },
           { name: 'football-cakes', href: 'football-cakes' },
-          { name: 'basketball-cakes', href: 'basketball-cakes' },
           { name: 'rainbow-cakes', href: 'rainbow-cakes' },
           { name: 'butterfly-cakes', href: 'butterfly-cakes' },
-          { name: 'dinosaur-cakes', href: 'dinosaur-cakes' },
-          { name: 'all-designer-cakes', href: 'all-designer-cakes' },
         ]
       }
     ]
@@ -85,22 +72,19 @@ const menuItems = [
     label: 'Photo Cakes',
     dropdown: [
       { name: 'Photo-Cakes', href: 'Photo-cakes' },
-      { name: 'Name-Cakes', href: 'Photo-cakes' },
-      { name: 'Designer-Cakes', href: 'Photo-cakes' },
-      { name: '3D-Cakes', href: 'Photo-cakes' },
-      { name: 'Fondant-Cakes', href: 'Photo-cakes' },
-      { name: 'Custom-Flavors', href: 'Photo-cakes' },
     ],
   },
   {
     label: 'Anniversary',
     dropdown: [
       { name: '1st-anniversary-cakes', href: '1st-anniversary-cakes' },
-      { name: 'Dating-Anniversary', href: 'Dating-Anniversary' },
-      { name: 'Work-Anniversary', href: 'Work-Anniversary' },
-      { name: 'Friendship-Anniversary', href: 'Friendship-Anniversary' },
-      { name: 'Anniversary-Combos', href: 'Anniversary-Combos' },
-      { name: 'Anniversary-Specials', href: 'Anniversary-Specials' },
+      { name: 'Anniversary-Photo-Cakes', href: 'Anniversary-Photo-Cakes' },
+    ],
+  },
+  {
+    label: 'Combo',
+    dropdown: [
+      { name: 'Combo', href: 'Combo' },
     ],
   },
   {
@@ -334,7 +318,7 @@ const SubNavbar = ({ vertical = false }) => {
                   )}
                   <div className="px-4 py-2 border-t border-gray-100">
                     <button
-                      onClick={() => handleItemClick(item.href)}
+                      onClick={() => {navigate('/all-cakes')}}
                       className="text-sm text-rose-500 hover:text-rose-600 font-medium"
                     >
                       View All {item.label} →
