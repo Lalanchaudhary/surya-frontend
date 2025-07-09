@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllAddons, createAddon, updateAddon, deleteAddon } from '../../services/adminService';
+import { storage } from '../../Firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const Addons = () => {
   const [addons, setAddons] = useState([]);
@@ -9,6 +11,9 @@ const Addons = () => {
   const [form, setForm] = useState({ name: '', image: '', price: '', tag: '' });
   const [editId, setEditId] = useState(null);
   const [touched, setTouched] = useState({});
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadError, setUploadError] = useState(null);
 
   // Fetch all addons
   const fetchAddons = async () => {
@@ -31,6 +36,37 @@ const Addons = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setTouched({ ...touched, [e.target.name]: true });
+  };
+
+  // Handle file upload
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadProgress(0);
+    setUploadError(null);
+    try {
+      const storageRef = ref(storage, `addon-images/${Date.now()}-${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          setUploadError(error.message);
+          setUploading(false);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setForm(prev => ({ ...prev, image: downloadURL }));
+          setUploading(false);
+        }
+      );
+    } catch (err) {
+      setUploadError(err.message);
+      setUploading(false);
+    }
   };
 
   // Validation
@@ -125,14 +161,42 @@ const Addons = () => {
               {errors.name && touched.name && <div style={{ color: 'red', fontSize: 12 }}>{errors.name}</div>}
             </div>
             <div style={{ flex: 1, minWidth: 180 }}>
-              <label style={{ fontWeight: 500 }}>Image URL<span style={{ color: 'red' }}>*</span></label>
+              <label style={{ fontWeight: 500 }}>Image <span style={{ color: 'red' }}>*</span></label>
               <input
                 name="image"
                 placeholder="Image URL"
                 value={form.image}
                 onChange={handleChange}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: errors.image && touched.image ? '1px solid red' : '1px solid #ccc', marginTop: 4 }}
+                disabled={uploading}
+                style={{ width: '100%', padding: 8, borderRadius: 4, border: errors.image && touched.image ? '1px solid red' : '1px solid #ccc', marginTop: 4, marginBottom: 8 }}
               />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <button
+                  type="button"
+                  style={{ border: '1px solid #2563eb', background: '#fff', color: '#2563eb', borderRadius: 4, padding: '6px 12px', cursor: uploading ? 'not-allowed' : 'pointer', opacity: uploading ? 0.7 : 1 }}
+                  disabled={uploading}
+                >
+                  <label style={{ cursor: uploading ? 'not-allowed' : 'pointer' }}>
+                    Upload Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </button>
+                {uploading && (
+                  <div style={{ minWidth: 80 }}>
+                    <progress value={uploadProgress} max="100" style={{ width: 60 }} />
+                    <span style={{ fontSize: 12, marginLeft: 4 }}>{Math.round(uploadProgress)}%</span>
+                  </div>
+                )}
+                {uploadError && <span style={{ color: 'red', fontSize: 12 }}>{uploadError}</span>}
+                {form.image && (
+                  <img src={form.image} alt="Preview" style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4, border: '1px solid #eee' }} />
+                )}
+              </div>
               {errors.image && touched.image && <div style={{ color: 'red', fontSize: 12 }}>{errors.image}</div>}
             </div>
             <div style={{ flex: 1, minWidth: 120 }}>
