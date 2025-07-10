@@ -36,6 +36,7 @@ import Home from './components/Home'
 import Addons from './components/admin/Addons'
 import CommanPage from './pages/CommanPage'
 import AllCommonPage from './pages/AllCommonPage'
+import Download from './pages/Download'
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token')
@@ -149,6 +150,7 @@ const App = () => {
             <Route path="/cakes/:id" element={<CommanPage />} />
             <Route path="/allcakes/:id" element={<AllCommonPage />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/download-apk" element={<Download />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<Terms />} />
