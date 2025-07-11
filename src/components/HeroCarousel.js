@@ -3,16 +3,18 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
+import carousel1 from '../assets/carousel1.jpg'
+import carousel2 from '../assets/carousel2.jpg'
+import carousel3 from '../assets/carousel3.jpg'
 const slides = [
   {
-    image: 'https://assets.winni.in/sf-img/live/visuals/home/desktop/2025/6/1750743296657.jpg',
+    image: carousel1,
   },
   {
-    image: 'https://assets.winni.in/sf-img/live/visuals/home/desktop/2025/3/1740983590442.jpg',
+    image: carousel2,
   },
   {
-    image: 'https://assets.winni.in/sf-img/live/visuals/home/desktop/2025/3/1740983560968.jpg',
+    image: carousel3,
   },
 ];
 
@@ -54,11 +56,6 @@ const HeroCarousel = ({ data = slides }) => {
     arrows: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    appendDots: dots => (
-      <div style={{ position: 'absolute', bottom: 10, right: 10 }}>
-        <ul className="flex gap-2">{dots}</ul>
-      </div>
-    ),
     customPaging: i => (
       <button className="w-2 h-2 sm:w-2 sm:h-2 rounded-full bg-black/30 hover:bg-black/60 focus:outline-none" />
     ),
@@ -72,7 +69,7 @@ const HeroCarousel = ({ data = slides }) => {
             <img
               src={slide.image}
               alt={`slide-${idx}`}
-              className="w-full h-[200px] sm:h-[260px] md:h-[420px] lg:h-[440px] object-cover object-center"
+              className="w-full h-[100px] sm:h-[100px] md:h-[320px] lg:h-[340px] object-cover object-center"
             />
           </div>
         ))}
