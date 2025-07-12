@@ -48,6 +48,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     }
   };
 
+  // Updated Styles (keep these inside StyleSheet.create)
   const styles = StyleSheet.create({
     page: {
       padding: 30,
@@ -71,7 +72,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     },
     invoiceDetails: {
       fontSize: 10,
-      marginBottom: 10,
+      marginBottom: 2,
     },
     billTo: {
       fontSize: 12,
@@ -93,17 +94,10 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       textAlign: 'center',
       fontWeight: 'bold',
       color: '#fff',
-      borderColor:'#fff'
+      borderColor: 'red'
     },
     tableRow1: {
       flexDirection: 'row',
-    },
-    tableColHeader1: {
-      fontSize: 10,
-      borderColor: '#bedef1',
-      borderRightWidth: 1,
-      padding: 5,
-      textAlign: 'center'
     },
     tableColHeader2: {
       fontSize: 10,
@@ -112,13 +106,9 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
       padding: 5,
       textAlign: 'center',
     },
-    tableCol: {
-      width: '33%',
-    },
     subtotalRow: {
       width: 150,
       flexDirection: 'row',
-      // borderBottomWidth: 0.4,
       paddingBottom: 5,
       justifyContent: 'space-around',
       marginTop: 7,
@@ -127,7 +117,6 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     subtotalRow1: {
       width: 200,
       flexDirection: 'row',
-      // borderBottomWidth: 0.4,
       justifyContent: 'space-around',
       marginTop: 7,
       fontWeight: 'bold',
@@ -136,25 +125,17 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     },
     footer: {
       position: 'absolute',
-      bottom: 10,
-      width: '106%',
-      left:15
-    },
-    footerInner: {
-      width: '88%',
-      fontSize: 10,
-      padding: 10,
-      paddingBottom: 0,
-      marginLeft:335
+      bottom: 2,
+      width: '110%',
     },
     bold: {
       fontWeight: 'bold',
+      fontSize:12
     },
   });
 
-  // Invoice PDF Component
+  // Invoice Component
   const Invoice = ({ order }) => {
-    // Prepare billData from order
     const billData = {
       customer: {
         displayName: order.user?.name || order.userName || 'Customer',
@@ -179,12 +160,13 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     return (
       <Document>
         <Page size="A4" style={styles.page}>
-          {/* Invoice Title */}
+          {/* Title and Logo */}
           <View style={styles.titleView}>
             <Image src={logo} style={styles.logo} />
             <Text style={styles.title}>Invoice</Text>
           </View>
-          {/* Bill To */}
+
+          {/* Bill To and Invoice Details */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
             <View>
               <Text style={styles.billTo}>Bill To:</Text>
@@ -196,16 +178,22 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
             <View>
               <Text style={[styles.invoiceDetails, { fontSize: 14, fontWeight: 'bold' }]}>Invoice No. INV-{billData.invoiceNumber}</Text>
               <Text style={[styles.invoiceDetails, { fontSize: 14, fontWeight: 'bold' }]}>GST No. - 09FYDPS8223M1ZO</Text>
-              <Text style={[styles.invoiceDetails]}>Date: {new Date(billData.invoiceDate).toLocaleDateString()}</Text>
+              <Text style={styles.invoiceDetails}>Date: {new Date(billData.invoiceDate).toLocaleDateString()}</Text>
+
+              {/* Contact Details */}
+              <Text style={styles.invoiceDetails}>Phone: 7503500400</Text>
+              <Text style={styles.invoiceDetails}>Email: Info@suryacake.in</Text>
+              <Text style={styles.invoiceDetails}>Website: www.suryacake.in</Text>
             </View>
           </View>
-          {/* Table */}
+
+          {/* Items Table */}
           <View style={styles.table}>
             <View style={styles.tableRow}>
               <Text style={[styles.tableColHeader, { width: '5%' }]}>#</Text>
               <Text style={[styles.tableColHeader, { width: '60%' }]}>Item</Text>
               <Text style={[styles.tableColHeader, { width: '10%' }]}>Qty</Text>
-              <Text style={[styles.tableColHeader, { width: '10%' }]}>rate</Text>
+              <Text style={[styles.tableColHeader, { width: '10%' }]}>Rate</Text>
               <Text style={[styles.tableColHeader, { width: '15%' }]}>Amount</Text>
             </View>
             {billData.items.map((item, idx) => (
@@ -218,16 +206,17 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
               </View>
             ))}
           </View>
-          {/* Subtotal and Totals */}
+
+          {/* Totals */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 10 }}>Thanks for your buisness</Text>
-            <View style={styles.subtotalHeadRow}>
+            <Text style={{ fontSize: 10 }}>Thanks for your business</Text>
+            <View>
               <View style={styles.subtotalRow}>
                 <Text style={{ fontSize: 10 }}>Sub Total</Text>
                 <Text style={{ fontSize: 10 }}>{billData.subTotal}</Text>
               </View>
               <View style={styles.subtotalRow}>
-                <Text style={{ fontSize: 10 }}>Shipping Charge </Text>
+                <Text style={{ fontSize: 10 }}>Shipping Charge</Text>
                 <Text style={{ fontSize: 10 }}>₹{order.shippingcharge.toFixed(2)}</Text>
               </View>
               <View style={styles.subtotalRow}>
@@ -240,58 +229,21 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
               </View>
             </View>
           </View>
-          {/* Footer */}
+
+          {/* Footer with Address and Signature */}
           <View style={styles.footer}>
-            <View style={styles.footerInner}>
-              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-end', marginVertical: 20 }}>
-                <Text style={styles.bold}>Authorized Signature</Text>
-                <View style={{ height: 1, width: 120, backgroundColor: '#000' }}></View>
-              </View>
-            </View>
-            
-            {/* Contact Info Section */}
             <View style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingTop: 20,
-              paddingHorizontal: 10,
-              borderTopColor: 'red',
-              borderTopWidth: 2
+              alignItems:'center',
+              padding: 10,
             }}>
-              {/* Phone */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Phone Icon using @react-pdf/renderer Svg */}
-                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
-                  <Path d="M22 16.92V21a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3 5.18 2 2 0 0 1 5 3h4.09a2 2 0 0 1 2 1.72c.13 1.13.37 2.23.72 3.28a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c1.05.35 2.15.59 3.28.72A2 2 0 0 1 22 16.92z" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                </Svg>
-                <Text style={{ fontSize: 10 }}>7503500400</Text>
-              </View>
-              {/* Email */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Email Icon using @react-pdf/renderer Svg */}
-                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
-                  <Rect x={2} y={4} width={20} height={16} rx={2} stroke="#ED3500" strokeWidth={2} fill="none" />
-                  <Path d="M22,6 L12,13 L2,6" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                </Svg>
-                <Text style={{ fontSize: 10 }}>Info@suryacake.in</Text>
-              </View>
-              {/* Address */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Location Icon using @react-pdf/renderer Svg */}
-                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
-                  <Path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 1 1 18 0z" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                  <Circle cx={12} cy={10} r={3} stroke="#ED3500" strokeWidth={2} fill="none" />
-                </Svg>
-                <Text style={{ fontSize: 10 }}>Sector 128, Noida, Utter Pradesh</Text>
-              </View>
-              {/* Website */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Globe Icon using @react-pdf/renderer Svg */}
-                <Svg width={18} height={18} viewBox="0 0 24 24" style={{ marginRight: 4 }}>
-                  <Path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 0c2.5 2.5 2.5 15.5 0 18m0-18c-2.5 2.5-2.5 15.5 0 18m-8-9h16" stroke="#ED3500" strokeWidth={2} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                </Svg>
-                <Text style={{ fontSize: 10 }}>www.suryacake.in</Text>
+              <Text style={{ fontSize: 10, width: '60%' }}>
+                Address: Sector 128, Noida, Uttar Pradesh
+              </Text>
+              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-end' }}>
+                <Text style={styles.bold}>Authorized Signature</Text>
+                <View style={{ height: 1, width: 120, backgroundColor: '#000' }}></View>
               </View>
             </View>
           </View>
@@ -300,6 +252,7 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
     );
   };
 
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -307,8 +260,8 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-semibold text-gray-900">Order #{order.orderId}</h3>
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-                  'bg-yellow-100 text-yellow-800'
+              order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
+                'bg-yellow-100 text-yellow-800'
               }`}>
               {order.status}
             </span>
@@ -548,8 +501,8 @@ const MyOrders = () => {
               </div>
               <div className="mt-2 sm:mt-0 flex items-center gap-2">
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                    order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
+                  order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
+                    'bg-yellow-100 text-yellow-800'
                   }`}>
                   {order.status}
                 </span>

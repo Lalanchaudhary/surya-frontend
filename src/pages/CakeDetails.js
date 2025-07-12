@@ -421,7 +421,7 @@ const CakeDetails = () => {
           <div className="mb-2">
             <div className="font-semibold text-gray-700 mb-1">Product Details:</div>
             <ul className="list-disc list-inside text-gray-600 text-sm">
-              {cakeData.product_details?.map((detail, idx) => (
+              {cakeData.product_details?.slice(0, 10).map((detail, idx) => (
                 <li key={idx}>{detail}</li>
               ))}
             </ul>
