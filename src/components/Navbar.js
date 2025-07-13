@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaUser, FaShoppingCart, FaPhone } from 'react-icons/fa';
+import { FaUser, FaShoppingCart, FaPhone, FaWhatsapp } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 import { IoMdPin } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
@@ -128,7 +128,7 @@ export default function Navbar() {
   };
 
   return (
-<nav className="flex flex-wrap items-center justify-between px-4 md:px-6 py-3 md:py-4 shadow-sm border-b bg-white relative gap-y-2">
+<nav className="flex flex-wrap items-center justify-between px-4 md:px-6 py-2 md:py-1 shadow-sm border-b bg-white relative gap-y-2 sticky top-0 z-50">
   {/* Logo */}
   <div className="flex items-center justify-between w-full md:w-auto">
     <img
@@ -154,8 +154,8 @@ export default function Navbar() {
     <a href="tel:+917503500400" className="text-rose-600 hover:text-rose-800 font-semibold flex items-center">
       <FaPhone className="mr-1" /> +91 7503500400
     </a>
-    <a href="tel:+918750400509" className="text-rose-600 hover:text-rose-800 font-semibold flex items-center">
-      <FaPhone className="mr-1" /> +91 8750400509
+    <a href="https://wa.me/918750400509" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-800 font-semibold flex items-center">
+      <FaWhatsapp className="mr-1" /> +91 8750400509
     </a>
   </div>
 
@@ -206,12 +206,12 @@ export default function Navbar() {
   {/* Right Section - Desktop only */}
   <div className="hidden md:flex items-center space-x-6 text-sm text-gray-700">
     {/* Contact Numbers */}
-    <div className="flex flex-col items-end">
+    <div className="flex flex-row items-end gap-6 mr-6">
       <a href="tel:+917503500400" className="flex items-center text-rose-600 hover:text-rose-800">
         <FaPhone className="mr-1" /> +91 7503500400
       </a>
-      <a href="tel:+918750400509" className="flex items-center mt-1 text-rose-600 hover:text-rose-800">
-        <FaPhone className="mr-1" /> +91 8750400509
+      <a href="https://wa.me/918750400509" target="_blank" rel="noopener noreferrer" className="flex items-center mt-1 text-rose-600 hover:text-rose-800">
+        <FaWhatsapp className="mr-1" /> +91 8750400509
       </a>
     </div>
 

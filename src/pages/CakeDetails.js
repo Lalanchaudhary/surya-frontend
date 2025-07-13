@@ -204,6 +204,14 @@ const CakeDetails = () => {
   // Updated review submission handler
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error('Please login to submit a review');
+      return;
+    }
+    
     if (newReview.rating === 0 || !newReview.comment || !newReview.name) {
       toast.error('Please fill in all fields and select a rating');
       return;
@@ -233,7 +241,11 @@ const CakeDetails = () => {
       toast.success('Review submitted successfully!');
     } catch (error) {
       console.error('Error submitting review:', error);
-      toast.error('Failed to submit review. Please try again later.');
+      if (error.response?.status === 401) {
+        toast.error('Please login to submit a review');
+      } else {
+        toast.error('Failed to submit review. Please try again later.');
+      }
     } finally {
       setSubmittingReview(false);
     }
@@ -394,13 +406,15 @@ const CakeDetails = () => {
             </div>
             <div className="text-xs text-gray-500 mb-2">14:23:41 hours left for today delivery</div>
             {/* Offers */}
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded mb-2">
-              <div className="font-semibold text-yellow-800 mb-1">Available offers</div>
-              <ul className="list-disc list-inside text-sm text-yellow-900">
-                <li>Get upto ₹100 in wallet in first order</li>
-              <li>refers this site with your friend for get reward</li>
-              </ul>
-            </div>
+            <div className="font-bold text-lg mb-3 text-gray-800">Product Detail</div>
+          <div className="mb-2">
+            <ul className="list-disc list-inside text-gray-600 text-sm">
+              {cakeData.product_details?.slice(0, 8).map((detail, idx) => (
+                <li key={idx}>{detail}</li>
+              ))}
+              <li>Cake number: {cakeData.number}</li>
+            </ul>
+          </div>
             {/* Rating and Reviews */}
             <div className="flex items-center gap-2 mt-2">
               <span className="bg-green-500 text-white font-semibold rounded px-2 py-0.5 flex items-center gap-1">
@@ -414,19 +428,6 @@ const CakeDetails = () => {
           </div>
         </div>
 
-
-        {/* Product Description Section */}
-        <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <div className="font-bold text-lg mb-3 text-gray-800">Product Description</div>
-          <div className="mb-2">
-            <div className="font-semibold text-gray-700 mb-1">Product Details:</div>
-            <ul className="list-disc list-inside text-gray-600 text-sm">
-              {cakeData.product_details?.slice(0, 10).map((detail, idx) => (
-                <li key={idx}>{detail}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
 
         {/* Reviews Section */}
         <div className="mt-8">
@@ -471,38 +472,10 @@ const CakeDetails = () => {
         <div className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">You May Also Like</h2>
-            <div className="flex gap-2">
-              <button
-                onClick={scrollLeft}
-                className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
-                aria-label="Scroll left"
-              >
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={scrollRight}
-                className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
-                aria-label="Scroll right"
-              >
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
           </div>
-          <div 
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x snap-mandatory"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
-            }}
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {relatedCakesLoading ? (
-              <div className="w-full text-center py-4">
+              <div className="col-span-full text-center py-4">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-500 mx-auto"></div>
                 <p className="mt-2 text-gray-600">Loading suggestions...</p>
               </div>
@@ -510,25 +483,35 @@ const CakeDetails = () => {
               relatedCakes.map((cake) => (
                 <div
                   key={cake._id}
-                  className="flex-none w-[280px] md:w-[320px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer snap-start"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100"
                   onClick={() => navigate(`/cake/${cake._id}`)}
                 >
-                  <div className="aspect-square">
+                  <div className="aspect-square relative overflow-hidden">
                     <img
                       src={cake.image}
                       alt={cake.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />
+                    {cake.tag && (
+                      <div className="absolute top-2 left-2 bg-rose-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                        {cake.tag}
+                      </div>
+                    )}
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">{cake.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{cake.description}</p>
-                    <p className="text-rose-500 font-semibold">₹{cake.price}</p>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-sm text-gray-900 mb-2 line-clamp-2 leading-tight">{cake.name}</h3>
+                    <div className="flex items-center justify-between">
+                      <p className="text-rose-500 font-bold text-base">₹{cake.price}</p>
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-400 text-xs">★</span>
+                        <span className="text-gray-600 text-xs">{parseFloat(cake.rating)?.toFixed(1) || '4.5'}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="w-full text-center text-gray-500 py-4">No related cakes found.</div>
+              <div className="col-span-full text-center text-gray-500 py-4">No related cakes found.</div>
             )}
           </div>
         </div>

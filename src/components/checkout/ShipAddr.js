@@ -100,8 +100,13 @@ const ShipAddr=({setSelectedAddress1, setShippingCost, shippingCost, shippingLoa
                         }
                     }
                     if (minDistance !== Infinity) {
-                        setShippingCost(minDistance * 10); // Rs 10 per km
-                        setShipping(minDistance * 10);
+                        if (minDistance < 15) {
+                            setShippingCost(0); // Free shipping under 15km
+                            setShipping(0);
+                        } else {
+                            setShippingCost(minDistance * 10); // Rs 10 per km for 15km and above
+                            setShipping(minDistance * 10);
+                        }
                     } else {
                         setShippingCost(0);
                     }

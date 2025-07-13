@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const menuItems = [
@@ -145,8 +145,24 @@ const SubNavbar = ({ vertical = false }) => {
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
+  const [navbarHeight, setNavbarHeight] = useState(0);
   const itemRefs = useRef({});
   const navigate = useNavigate();
+
+  // Calculate navbar height for sticky positioning
+  useEffect(() => {
+    const calculateNavbarHeight = () => {
+      const navbar = document.querySelector('nav[class*="sticky"]');
+      if (navbar) {
+        setNavbarHeight(navbar.offsetHeight);
+      }
+    };
+
+    calculateNavbarHeight();
+    window.addEventListener('resize', calculateNavbarHeight);
+    
+    return () => window.removeEventListener('resize', calculateNavbarHeight);
+  }, []);
 
   const handleMouseEnter = (label) => {
     if (!vertical && window.innerWidth >= 768 && itemRefs.current[label]) {
@@ -206,9 +222,10 @@ const SubNavbar = ({ vertical = false }) => {
 
   return (
     <nav
-      className={`w-full bg-red-600 border-b border-gray-100 shadow-sm relative`}
+      className={`w-full bg-red-600 border-b border-gray-100 shadow-sm relative sticky z-40`}
+      style={{ top: navbarHeight }}
     >
-      <div className="md:hidden flex items-center justify-between px-4 py-3">
+      <div className="md:hidden flex items-center justify-between px-4 py-1">
         <span className="text-white text-lg font-bold">Menu</span>
         <button
           className="text-white focus:outline-none"
@@ -241,7 +258,7 @@ const SubNavbar = ({ vertical = false }) => {
         </button>
       </div>
       <ul
-        className={`hidden md:flex flex-row justify-between items-center px-8 py-3 md:py-4 overflow-x-auto whitespace-nowrap`}
+        className={`hidden md:flex flex-row justify-between items-center px-8 py-2 md:py-2 overflow-x-auto whitespace-nowrap`}
       >
         {menuItems.map((item) => {
           const isActive = hoveredItem === item.label;
@@ -258,14 +275,9 @@ const SubNavbar = ({ vertical = false }) => {
                 className="relative flex flex-col items-start group"
               >
                 <button
-                  className={`text-md md:text-lg font-normel text-white hover:text-rose-500 transition-colors px-2`}
+                  className={`text-md md:text-lg font-medium text-white hover:text-rose-500 transition-colors px-2`}
                 >
                   {item.label}
-                  {item.badge && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-red-500 text-white">
-                      {item.badge}
-                    </span>
-                  )}
                 </button>
               </li>
 

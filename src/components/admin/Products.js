@@ -42,6 +42,7 @@ const Products = () => {
   const [error, setError] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchNumber, setSearchNumber] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     flavor: '',
@@ -53,6 +54,7 @@ const Products = () => {
     description: '',
     label: '',
     tag: '',
+    number: '',
     sizes: [],
     product_details: []
   });
@@ -97,6 +99,7 @@ const Products = () => {
       description: '',
       label: '',
       tag: '',
+      number: '',
       sizes: [],
       product_details: []
     });
@@ -116,6 +119,7 @@ const Products = () => {
       description: product.description || '',
       label: product.label || '',
       tag: product.tag || '',
+      number: product.number || '',
       sizes: product.sizes || [],
       product_details: product.product_details || []
     });
@@ -267,11 +271,24 @@ const Products = () => {
     return acc;
   }, {});
 
+  // Filter products by number if search is active
+  const filteredGroupedProducts = searchNumber 
+    ? Object.keys(groupedProducts).reduce((acc, tag) => {
+        const filteredProducts = groupedProducts[tag].filter(product => 
+          product.number && product.number.toString() === searchNumber
+        );
+        if (filteredProducts.length > 0) {
+          acc[tag] = filteredProducts;
+        }
+        return acc;
+      }, {})
+    : groupedProducts;
+
   return (
     <Box p={3}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">
-          Products Management
+          Products Management (Total: {products.length})
         </Typography>
         <Button
           variant="contained"
@@ -283,67 +300,90 @@ const Products = () => {
         </Button>
       </Box>
 
+      {/* Search Box */}
+      <Box mb={3}>
+        <TextField
+          fullWidth
+          label="Search by Product Number"
+          variant="outlined"
+          value={searchNumber}
+          onChange={(e) => setSearchNumber(e.target.value)}
+          placeholder="Enter product number to search..."
+          sx={{ maxWidth: 400 }}
+        />
+      </Box>
+
       {/* Render products grouped by tag */}
-      {Object.keys(groupedProducts).map((tag) => (
-        <Box key={tag} mb={4}>
-          <Typography variant="h6" color="primary" gutterBottom>
-            {tag}
+      {Object.keys(filteredGroupedProducts).length === 0 ? (
+        <Box textAlign="center" py={4}>
+          <Typography variant="h6" color="textSecondary">
+            {searchNumber ? 'No products found with that number' : 'No products available'}
           </Typography>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Image</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Flavor</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Original Price</TableCell>
-                  <TableCell>Rating</TableCell>
-                  <TableCell>Reviews</TableCell>
-                  <TableCell>Label</TableCell>
-                  <TableCell>Tag</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {groupedProducts[tag].map((product) => (
-                  <TableRow key={product._id}>
-                    <TableCell>
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        style={{ width: 50, height: 50, objectFit: 'cover' }}
-                      />
-                    </TableCell>
-                    <TableCell>{product.name}</TableCell>
-                    <TableCell>{product.flavor}</TableCell>
-                    <TableCell>₹{product.price.toFixed(2)}</TableCell>
-                    <TableCell>{product.original_price ? `₹${product.original_price.toFixed(2)}` : '-'}</TableCell>
-                    <TableCell>{product.rating}</TableCell>
-                    <TableCell>{product.reviews}</TableCell>
-                    <TableCell>{product.label}</TableCell>
-                    <TableCell>{product.tag}</TableCell>
-                    <TableCell>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleEditProduct(product)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteProduct(product._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
         </Box>
-      ))}
+      ) : (
+        Object.keys(filteredGroupedProducts).map((tag) => (
+          <Box key={tag} mb={4}>
+            <Typography variant="h6" color="primary" gutterBottom>
+              {tag}
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Image</TableCell>
+                    <TableCell>Number</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Flavor</TableCell>
+                    <TableCell>Price</TableCell>
+                    <TableCell>Original Price</TableCell>
+                    <TableCell>Rating</TableCell>
+                    <TableCell>Reviews</TableCell>
+                    <TableCell>Label</TableCell>
+                    <TableCell>Tag</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredGroupedProducts[tag].map((product) => (
+                    <TableRow key={product._id}>
+                      <TableCell>
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          style={{ width: 50, height: 50, objectFit: 'cover' }}
+                        />
+                      </TableCell>
+                      <TableCell>{product.number || '-'}</TableCell>
+                      <TableCell>{product.name}</TableCell>
+                      <TableCell>{product.flavor}</TableCell>
+                      <TableCell>₹{product.price.toFixed(2)}</TableCell>
+                      <TableCell>{product.original_price ? `₹${product.original_price.toFixed(2)}` : '-'}</TableCell>
+                      <TableCell>{product.rating}</TableCell>
+                      <TableCell>{product.reviews}</TableCell>
+                      <TableCell>{product.label}</TableCell>
+                      <TableCell>{product.tag}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleEditProduct(product)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDeleteProduct(product._id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        ))
+      )}
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="md" fullWidth>
         <DialogTitle>
@@ -407,6 +447,15 @@ const Products = () => {
                   label="Tag"
                   name="tag"
                   value={formData.tag}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Number"
+                  name="number"
+                  value={formData.number}
                   onChange={handleInputChange}
                 />
               </Grid>

@@ -37,6 +37,7 @@ import Addons from './components/admin/Addons'
 import CommanPage from './pages/CommanPage'
 import AllCommonPage from './pages/AllCommonPage'
 import Download from './pages/Download'
+import SubNavbar from './components/SubNavbar'
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token')
@@ -139,6 +140,7 @@ const App = () => {
       <ScrollToTop />
       <div className="bg-[#f4eee1] min-h-screen flex flex-col">
         {!isAdminRoute && <NavbarDemo />}
+        {!isAdminRoute && <SubNavbar />}
         <main className="flex-grow">
           <Routes>
             {/* Public Routes */}

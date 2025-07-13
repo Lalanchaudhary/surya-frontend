@@ -85,7 +85,6 @@ const Home = () => {
 
   return (
     <div>
-      <SubNavbar />
       <HeroCarousel/>
       <CakeGallery/>
       <TermsandConditions/>

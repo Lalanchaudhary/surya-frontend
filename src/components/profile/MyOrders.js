@@ -341,7 +341,6 @@ const OrderDetail = ({ order, onClose, onCancel }) => {
                     <span className="text-gray-600 ml-2">x {item.quantity}</span>
                   </div>
                   <div className="text-right">
-                    <div className="text-gray-600">₹{item.price.toFixed(2)} each</div>
                     <div className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</div>
                   </div>
                 </div>
