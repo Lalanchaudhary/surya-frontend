@@ -1,6 +1,6 @@
 import React from 'react';
 import eggless from '../assets/suryalogo.png'
-const APK_URL = 'https://surya-4t37w0cq8-lalan-chaudharys-projects.vercel.app/SuryaCake.apk';
+const APK_URL = 'https://surya-apk.vercel.app/SuryaCake.apk';
 
 const Download = () => {
   return (
